@@ -6,12 +6,16 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 const CheckAvailability = () => {
   const [checkInDate, setCheckInDate] = useState(moment());
   const [checkOutDate, setCheckOutDate] = useState(moment().add(1, "days"));
+  const [checkOutOpen,setCheckOutOpen] = useState(false)
   // const [numberOfNights, setNumberOfNights] = useState(0);
   const getCheckIn = (date) => {
+    const checkInCopy = moment(date).clone();
     setCheckInDate(date);
+    setCheckOutDate(checkInCopy.add(1, "days"));
+    setCheckOutOpen(true)
   };
   const getCheckOut = (date) => {
-    setCheckOutDate(date);
+    setCheckOutOpen(false)
   };
   const navigate = useNavigate();
   const params = {
@@ -36,7 +40,7 @@ const CheckAvailability = () => {
 
   const disabledCheckOutDate = (current) => {
     // Can not select days before today
-    return current && current < moment().endOf("day");
+    return current && current < checkInDate.endOf("day");
   };
   return (
     <>
@@ -50,12 +54,13 @@ const CheckAvailability = () => {
       />
 
       <DatePicker
-        defaultValue={checkOutDate}
-        defaultPickerValue={checkOutDate}
+        value={checkOutDate}
         format={"dddd, MMM DD, YYYY"}
         disabledDate={disabledCheckOutDate}
         allowClear={false}
         onChange={getCheckOut}
+        open={checkOutOpen}
+        
       />
       <Button type="primary" size="large" onClick={searchRooms}>
         Check Availability
