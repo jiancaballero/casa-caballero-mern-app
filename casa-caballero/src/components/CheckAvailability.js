@@ -7,19 +7,18 @@ const CheckAvailability = () => {
   const [checkInDate, setCheckInDate] = useState(moment());
   const [checkOutDate, setCheckOutDate] = useState(moment().add(1, "days"));
   const [checkOutOpen, setCheckOutOpen] = useState(false);
-  // const [numberOfNights, setNumberOfNights] = useState(0);
+
   const getCheckIn = (date) => {
     const checkInCopy = moment(date).clone();
     setCheckInDate(date);
     setCheckOutDate(checkInCopy.add(1, "days"));
-   
   };
   const getCheckOut = (date) => {
     setCheckOutDate(date);
   };
-  const navigate = useNavigate();
 
-  const searchRooms = () =>{
+  const navigate = useNavigate();
+  const searchRooms = () => {
     const params = {
       checkIn: checkInDate.format("YYYY-MM-DD"),
       checkOut: checkOutDate.format("YYYY-MM-DD"),
@@ -30,16 +29,11 @@ const CheckAvailability = () => {
       pathname: "/search",
       search: `?${createSearchParams(params)}`,
     });
-  }
-  
-  
-  // const computeNumberOfNights = ()=>{
-  //   setNumberOfNights(checkOutDate.diff(checkInDate,'days'))
-  // }
+  };
 
   const disabledCheckInDate = (current) => {
     // Can not select days before today
-    return current < moment().endOf('day');
+    return current < moment().endOf("day");
   };
 
   const disabledCheckOutDate = (current) => {
@@ -47,15 +41,15 @@ const CheckAvailability = () => {
     return current && current <= checkInDate.endOf("day");
   };
 
-  const handleCheckInOpen = (open)=>{
-    console.log(open)
+  const handleCheckInOpen = (open) => {
+    console.log(open);
     if (!open) {
       setCheckOutOpen(true);
     }
-  }
-  const handleCheckOutOpen = (open)=>{
+  };
+  const handleCheckOutOpen = (open) => {
     setCheckOutOpen(open);
-  }
+  };
   return (
     <>
       <DatePicker
@@ -67,8 +61,6 @@ const CheckAvailability = () => {
         onChange={getCheckIn}
         onOpenChange={handleCheckInOpen}
         showToday={false}
-      
-        
       />
 
       <DatePicker
@@ -80,7 +72,6 @@ const CheckAvailability = () => {
         open={checkOutOpen}
         onOpenChange={handleCheckOutOpen}
         showToday={false}
-       
       />
       <Button type="primary" size="large" onClick={searchRooms}>
         Check Availability

@@ -1,13 +1,212 @@
-body {
+*,
+*::before,
+*::after {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+}
+img {
+  width: 100%;
+}
+body {
+  font-family: "Helvetica Neue", Helvetica;
+  src: url("./assets/font/HelveticaNeue.ttc");
+}
+.container {
+  max-width: 1280px;
+  padding: 0 5%;
+  margin: 0 auto;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.flex {
+  display: flex;
+}
+.about-container {
+  text-align: center;
+  gap: 40px;
+}
+.about-left {
+  flex: 1 1 50%;
+}
+.about-right {
+  flex-basis: 50%;
+}
+.about-learn-more {
+  gap: 8px;
+  justify-content: center;
+}
+.about-learn-more svg {
+  padding-top: 3px;
+}
+.flex-achievement {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.flex-achievement svg {
+  font-size: 3.5rem;
+  margin-bottom: 0.4em;
+}
+.logo-small {
+  width: 10%;
+  margin: 0 auto;
+}
+.logo-small > img {
+  width: 100%;
+}
+.achievement-section {
+  gap: 120px;
+  justify-content: center;
+}
+.Accomodations {
+  background:#F8F8F8;
+  text-align: center;
+}
+.room-carousel {
+  position: relative;
+  flex: 1 1 50%;
+}
+.room-info-container {
+  padding-left: 1.3em;
+  width: 100%;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+}
+.book-buttons {
+  align-self: flex-end;
+}
+.room1 {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.Facilities {
+  text-align: center;
+}
+.facility-gallery {
+  gap: 20px;
+}
+.facililty-card {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  color: #c7c4c0;
+  text-align: left;
+  padding: 0.8em;
+  height: 558px;
+  flex: 1 1 33.33%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.cafe,
+.spa,
+.pool {
+  position: relative;
+  background-color: #696969;
+  outline: 1px solid #fff;
+  outline-offset: -8px;
+}
+.cafe::before,
+.spa::before,
+.pool::before {
+  display: inline-block;
+  content: "";
+  mix-blend-mode: overlay;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.cafe::before {
+  background-image: url(./assets/images/cafe.jpeg);
+  background-size: cover;
+}
+.spa::before {
+  background-image: url(./assets/images/spa.png);
+  background-size: cover;
+}
+
+.pool::before {
+  background-image: url(./assets/images/pool.jpeg);
+  background-size: cover;
+}
+
+.SpecialOffer {
+  background:#F8F8F8;
+  text-align: center;
+}
+.room-member {
+  justify-content: space-between;
+}
+
+.room-discount,
+.suite-discount {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  position: relative;
+  width: 500px;
+  height: 280px;
+  border-radius: 3px;
+  background-color: #727272;
+}
+.room-discount > h1,
+.room-discount > h3,
+.room-discount > svg ,
+.suite-discount > h1,
+.suite-discount > h3,
+.suite-discount > svg {
+  z-index: 1;
+  color: #fff;
+}
+.room-discount::before,
+.suite-discount::before {
+  display: inline-block;
+  content: "";
+  mix-blend-mode: overlay;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.room-discount::before {
+  background-image: url(./assets/images/room2.jpeg);
+  background-size: cover;
+}
+.suite-discount::before {
+  background-image: url(./assets/images/suite.jpeg);
+  background-size: cover;
+}
+.room-discount:hover::before,.suite-discount:hover::before {
+  mix-blend-mode: normal;
+  opacity: 0.8;
+  background: #926662;
+}
+.room-discount:hover{
+  background-image: url(./assets/images/room2.jpeg);
+  background-size: cover;
+}
+.suite-discount:hover{
+  background-size: cover;
+  background-image: url(./assets/images/suite.jpeg);
+}
+.BookingPage{
+  background:#E0D6CD;
+}
+.step-container{
+  gap:30px;
+}
+.step-content-container{
+  flex:1 1 60%;
+  
+}
+.BookingAmountSection{
+  flex: 1 1 40%;
+  background:#fff;
 }
