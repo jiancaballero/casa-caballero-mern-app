@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import Room from "./Room";
 
 const RoomList = () => {
   return (
-    <div>RoomList</div>
-  )
-}
+    <div className="room-list">
+      <Room />
+      <Room />
+     
+    </div>
+  );
+};
 
-export default RoomList
+export default RoomList;

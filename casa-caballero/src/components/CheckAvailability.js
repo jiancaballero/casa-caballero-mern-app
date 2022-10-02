@@ -26,7 +26,7 @@ const CheckAvailability = () => {
       child: 0,
     };
     navigate({
-      pathname: "/search",
+      pathname: "/booking/room-selection",
       search: `?${createSearchParams(params)}`,
     });
   };

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, message, Steps } from "antd";
 import moment from "moment";
+
 import RoomList from "../../components/RoomList";
+
+import BookingSummary from "../../components/BookingSummary";
 // import RoomList from './pages/room/RoomList';
 const Booking = () => {
   // TODO:user must be redirected to the homepage when check in is modifid in url
@@ -55,10 +58,19 @@ const Booking = () => {
         <div className="flex step-container">
           <div className="step-content-container">
             <div className="steps-content">{steps[current].content}</div>
+          </div>
+          <div className="BookingAmountSection">
+            <BookingSummary
+              checkIn={checkInDate}
+              checkOut={checkOutDate}
+              adult={adult}
+              child={child}
+              nights={numberOfNights}
+            />
             <div className="steps-action">
               {current < steps.length - 1 && (
                 <Button type="primary" onClick={() => next()}>
-                  Next
+                  CONTINUE
                 </Button>
               )}
               {current === steps.length - 1 && (
@@ -66,19 +78,10 @@ const Booking = () => {
                   type="primary"
                   onClick={() => message.success("Processing complete!")}
                 >
-                  Done
+                  CONTINUE
                 </Button>
               )}
             </div>
-          </div>
-          <div className="BookingAmountSection">
-            <ul>
-              <li>check in:{checkInStr} </li>
-              <li>check out:{checkOutStr} </li>
-              <li>adult:{adult} </li>
-              <li>child:{child} </li>
-              <li>{numberOfNights} nights </li>
-            </ul>
           </div>
         </div>
       </div>
