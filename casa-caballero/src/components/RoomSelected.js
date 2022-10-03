@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Collapse, Divider, Modal,Button } from "antd";
+import { Collapse, Divider, Modal, Button } from "antd";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -86,29 +86,29 @@ const RoomSelected = (props) => {
             </Collapse>
           </div>
           <div className="flex taxes-fees">
-            <div>
-              <h3>Taxes & Fees</h3>
-              <Collapse ghost>
-                <Panel header="More Details" key="1">
-                  <div className="flex service-charge">
-                    <p>Service Charge (10%)</p>
-                    <p>Amount</p>
-                  </div>
-                  <div className="flex VAT-amount">
-                    <p>VAT (12%)</p>
-                    <p>Amount</p>
-                  </div>
-                  <div className="flex local-tax">
-                    <p>Local Tax(1.50%)</p>
-                    <p>Amount</p>
-                  </div>
-                </Panel>
-              </Collapse>
-            </div>
+            <h3>Taxes & Fees</h3>
+
             <h3>Amount</h3>
           </div>
+          <Collapse ghost>
+            <Panel header="More Details" key="1">
+              <div className="flex service-charge">
+                <p>Service Charge (10%)</p>
+                <p>Amount</p>
+              </div>
+              <div className="flex VAT-amount">
+                <p>VAT (12%)</p>
+                <p>Amount</p>
+              </div>
+              <div className="flex local-tax">
+                <p>Local Tax(1.50%)</p>
+                <p>Amount</p>
+              </div>
+            </Panel>
+          </Collapse>
         </Panel>
       </Collapse>
+      <Button type="primary">ADD A ROOM</Button>
       <Divider />
       <div className="flex booking-total-amount">
         <h1>Total Amount</h1>

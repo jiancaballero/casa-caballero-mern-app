@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Image, Divider, Modal } from "antd";
-const Room = () => {
+const Room = ({getSelectedRoom}) => {
   const [visible, setVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -80,7 +80,7 @@ const Room = () => {
             </div>
           </div>
           <div className="flex book-room-btn">
-            <Button>Book Now</Button>
+            <Button onClick={()=>{getSelectedRoom("WORKING PROPS")}}>Book Now</Button>
           </div>
         </div>
         <Divider />

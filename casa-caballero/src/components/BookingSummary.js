@@ -5,7 +5,15 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { Divider } from "antd";
 import RoomSelected from "./RoomSelected";
 
-const BookingSummary = ({checkIn,checkOut,adult,child,nights}) => {
+const BookingSummary = ({
+  checkIn,
+  checkOut,
+  adult,
+  child,
+  nights,
+  selectedRoom,
+}) => {
+  console.log(selectedRoom)
   return (
     <div>
       {" "}
@@ -31,13 +39,16 @@ const BookingSummary = ({checkIn,checkOut,adult,child,nights}) => {
         </div>
       </div>
       <Divider />
-      <RoomSelected
-        checkIn={checkIn}
-        checkOut={checkOut}
-        adult={adult}
-        child={child}
-        nights={nights}
-      />
+      {selectedRoom.length>0 && (
+        <RoomSelected
+          checkIn={checkIn}
+          checkOut={checkOut}
+          adult={adult}
+          child={child}
+          nights={nights}
+          selectedRoom={selectedRoom}
+        />
+      )}
     </div>
   );
 };

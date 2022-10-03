@@ -24,6 +24,7 @@ const CheckAvailability = () => {
       checkOut: checkOutDate.format("YYYY-MM-DD"),
       adult: 1,
       child: 0,
+      step:0
     };
     navigate({
       pathname: "/booking/room-selection",
