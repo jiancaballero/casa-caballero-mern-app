@@ -11,9 +11,9 @@ const BookingSummary = ({
   adult,
   child,
   nights,
-  selectedRoom,
+  bookedRoom,
 }) => {
-  console.log(selectedRoom)
+  
   return (
     <div>
       {" "}
@@ -39,14 +39,14 @@ const BookingSummary = ({
         </div>
       </div>
       <Divider />
-      {selectedRoom.length>0 && (
+      {bookedRoom.length>0 && (
         <RoomSelected
           checkIn={checkIn}
           checkOut={checkOut}
           adult={adult}
           child={child}
           nights={nights}
-          selectedRoom={selectedRoom}
+          bookedRoom={bookedRoom}
         />
       )}
     </div>

@@ -8,6 +8,7 @@ import Booking from './pages/booking/Booking';
 import GuestDetails from './pages/booking/GuestDetails';
 
 function App() {
+ 
   return (
    <>
    <Routes>

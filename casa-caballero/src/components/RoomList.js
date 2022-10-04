@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Room from "./Room";
 
-const RoomList = ({getSelectedRoom}) => {
+const RoomList = ({allRooms}) => {
+  
   return (
     <div className="room-list">
-      <Room getSelectedRoom={getSelectedRoom} />
-     
+      {allRooms.map((room) => (
+        <Room roomCategory={room} />
+      ))}
     </div>
   );
 };

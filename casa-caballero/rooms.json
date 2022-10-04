@@ -1,7 +1,7 @@
 [
     {
       "room_title": "El Cuarto King",
-      "room_categoyr": "El Cuarto",
+      "room_category": "",
       "room_type": "Deluxe",
       "room_description": "El Cuarto are the largest entry-level deluxe rooms, offering space and privacy.",
       "rate": [
@@ -46,7 +46,7 @@
     },
     {
       "room_title": "El Cuarto Twin",
-      "room_categoyr": "El Cuarto",
+      "room_category": "",
       "room_type": "Deluxe",
       "room_description": "El Cuarto are the largest entry-level deluxe rooms, offering space and privacy.",
       "rate": [
@@ -91,7 +91,7 @@
     },
     {
       "room_title": "Deluxe Mountain View King",
-      "room_category": "Deluxe Mountain View",
+      "room_category": "",
       "room_type": "Deluxe",
       "room_description": "Deluxe room with a mountain view",
       "rate": [
@@ -183,7 +183,7 @@
     },
     {
       "room_title": "Primera King",
-      "room_category": "Primera ",
+      "room_category": " ",
       "room_type": "Premium Room",
       "room_description": "Primera rooms are the largest premium rooms including a larger foyer and an expansive bathroom.",
       "rate": [
@@ -229,7 +229,7 @@
     },
     {
       "room_title": "Suite King",
-      "room_category": "Suite",
+      "room_category": "",
       "room_type": "Suite",
       "room_description": "Suites offer apartment-style living ",
       "rate": [

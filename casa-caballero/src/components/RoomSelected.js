@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 const RoomSelected = (props) => {
+  // console.log(props.bookedRoom)
   const checkIn = props.checkIn;
   const checkOut = props.checkOut;
   const checkInClone = checkIn.clone();
@@ -108,7 +109,6 @@ const RoomSelected = (props) => {
           </Collapse>
         </Panel>
       </Collapse>
-      <Button type="primary">ADD A ROOM</Button>
       <Divider />
       <div className="flex booking-total-amount">
         <h1>Total Amount</h1>

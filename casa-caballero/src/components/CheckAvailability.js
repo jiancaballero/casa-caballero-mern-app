@@ -24,6 +24,7 @@ const CheckAvailability = () => {
       checkOut: checkOutDate.format("YYYY-MM-DD"),
       adult: 1,
       child: 0,
+      room:1,
       step:0
     };
     navigate({
@@ -56,7 +57,7 @@ const CheckAvailability = () => {
       <DatePicker
         defaultValue={checkInDate}
         defaultPickerValue={checkInDate}
-        format={"dddd, MMM DD, YYYY"}
+        format={"ddd, MMM DD, YYYY"}
         disabledDate={disabledCheckInDate}
         allowClear={false}
         onChange={getCheckIn}
@@ -66,7 +67,7 @@ const CheckAvailability = () => {
 
       <DatePicker
         value={checkOutDate}
-        format={"dddd, MMM DD, YYYY"}
+        format={"ddd, MMM DD, YYYY"}
         disabledDate={disabledCheckOutDate}
         allowClear={true}
         onChange={getCheckOut}

@@ -5,7 +5,7 @@ mongoose.connect(
 );
 
 const Room = require("../model/room.model");
-
+const RoomCategory= require("../model/room_category.model")
 const getRooms = async (req, res) => {
   try {
     const rooms = await Room.find().then({});
@@ -14,8 +14,20 @@ const getRooms = async (req, res) => {
     return res.status(400).send({ message:error})
   }
 };
+const getRoomCategory = async (req,res)=>{
+  try {
+    const params = await req.params.categoryID;
+    
+    const room = await RoomCategory.find().populate("rooms").then({})
+    console.log("OK desu")
+    return res.status(200).send(room);
+  } catch (error) {
+    return res.status(400).send({ message:error})
+  }
+}
 
 // insert controller functions
 module.exports = {
   getRooms,
+  getRoomCategory
 };
