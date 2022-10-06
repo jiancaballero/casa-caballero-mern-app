@@ -87,7 +87,7 @@ const Home = () => {
         </div>
       </Carousel>
       <div className="DatesAndGuest">
-        <div className="container">
+        <div className="container dates-guest-container">
           <CheckAvailability />
         </div>
       </div>

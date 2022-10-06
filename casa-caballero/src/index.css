@@ -270,4 +270,41 @@ body {
 }
 .room-rate-right {
   text-align: right;
+  
+}
+.guest_details_section{
+  padding-top:2em;
+  background: #e0d6cd;
+}
+.guest_details_container{
+  padding:4em;
+  justify-content:space-around;
+}
+
+
+.guest_left{
+  padding:4em;
+  background: #fff;
+  height:fit-content;
+}
+.guest_right{
+  padding:2em;
+  background: #fff;
+}
+.PaymentSection{
+  padding-top:2em;
+  background: #e0d6cd;
+}
+.payment-container{
+  padding:4em;
+  justify-content:space-between;
+}
+.payment-right{
+  padding:2em;
+  background: #fff;
+}
+.DatesAndGuest{
+  background:#C7C4C0;
+  padding:2.5em;
+  margin-bottom:2em;
 }

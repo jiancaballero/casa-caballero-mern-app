@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Room from "./Room";
 
-const RoomList = ({allRooms}) => {
+const RoomList = ({allRooms,nights}) => {
   
   return (
     <div className="room-list">
       {allRooms.map((room) => (
-        <Room roomCategory={room} />
+        <Room room={room} nights={nights} />
       ))}
     </div>
   );

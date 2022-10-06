@@ -10,7 +10,7 @@ import axios from "axios";
 import BookingSummary from "../../components/BookingSummary";
 import BookingSteps from "../../components/BookingSteps";
 // import RoomList from './pages/room/RoomList';
-const Booking = () => {
+const Booking = ({allRooms}) => {
   const style = {
     fontSize: "3em",
   };
@@ -26,45 +26,45 @@ const Booking = () => {
   const checkOutDate = moment(checkOutStr, "YYYY-MM-DD");
   const [numberOfNights, setNumberOfNights] = useState(0);
   const [bookedRoom, setBookedRoom] = useState([]);
-  const [allRooms, setAllRooms] = useState([]);
+  // const [allRooms, setAllRooms] = useState([]);
   // const [allRooms, setAllRooms] = useState([]);
 
   useEffect(() => {
     setNumberOfNights(checkOutDate.diff(checkInDate, "days"));
   }, []);
   
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = (await axios.get("/api/rooms/category")).data;
-        console.log(data)
-        setAllRooms(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const data = (await axios.get("/api/rooms")).data;
+        
+  //       setAllRooms(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
 
   // const getSelectedRoom = (selected) => {
   //   console.log(room);
   //   // setBookedRoom(bookedRoom)
   // };
-  const saveSelectedRoom = () => {
-    const params = {
-      checkIn: checkInDate.format("YYYY-MM-DD"),
-      checkOut: checkOutDate.format("YYYY-MM-DD"),
-      adult: adult,
-      child: child,
-      room:room,
-      step: 1,
+  // const saveSelectedRoom = () => {
+  //   const params = {
+  //     checkIn: checkInDate.format("YYYY-MM-DD"),
+  //     checkOut: checkOutDate.format("YYYY-MM-DD"),
+  //     adult: adult,
+  //     child: child,
+  //     room:room,
+  //     step: 1,
       
-    };
-    navigate({
-      pathname: "/booking/guest-details",
-      search: `?${createSearchParams(params)}`,
-    });
-  };
+  //   };
+  //   navigate({
+  //     pathname: "/booking/guest-details",
+  //     search: `?${createSearchParams(params)}`,
+  //   });
+  // };
 
   return (
     <div className="BookingPage">
@@ -73,7 +73,7 @@ const Booking = () => {
         {/* INSERT CONTENT FROM STEPS ARRAY */}
         <div className="flex step-container">
           <div className="step-content-container">
-            <RoomList allRooms={allRooms}/>
+            <RoomList allRooms={allRooms} nights={numberOfNights}/>
           </div>
           {/* BOOKING AMOUNT SECTIONS */}
           <div className="BookingAmountSection">
@@ -87,13 +87,13 @@ const Booking = () => {
               room={room}
             />
 
-            <Button
+            {/* <Button
               type="primary"
               disabled={!bookedRoom.length > 0}
               onClick={saveSelectedRoom}
             >
               CONTINUE
-            </Button>
+            </Button> */}
 
             {/* <Button
                   type="primary"

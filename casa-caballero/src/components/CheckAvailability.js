@@ -2,12 +2,12 @@ import { DatePicker, Space, Button } from "antd";
 import moment from "moment";
 import React, { useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const CheckAvailability = () => {
   const [checkInDate, setCheckInDate] = useState(moment());
   const [checkOutDate, setCheckOutDate] = useState(moment().add(1, "days"));
   const [checkOutOpen, setCheckOutOpen] = useState(false);
-
+  const [allRooms, setAllRooms] = useState([]);
   const getCheckIn = (date) => {
     const checkInCopy = moment(date).clone();
     setCheckInDate(date);
@@ -18,19 +18,34 @@ const CheckAvailability = () => {
   };
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const searchRooms = () => {
-    const params = {
-      checkIn: checkInDate.format("YYYY-MM-DD"),
-      checkOut: checkOutDate.format("YYYY-MM-DD"),
-      adult: 1,
-      child: 0,
-      room:1,
-      step:0
-    };
-    navigate({
-      pathname: "/booking/room-selection",
-      search: `?${createSearchParams(params)}`,
-    });
+    try {
+      axios
+        .post("http://localhost:8080/api/rooms", {
+          booking_start: checkInDate,
+          booking_end: checkOutDate,
+        })
+        .then((data) => {
+          console.log(data.data);
+          const params = {
+            checkIn: checkInDate.format("YYYY-MM-DD"),
+            checkOut: checkOutDate.format("YYYY-MM-DD"),
+            adult: 1,
+            child: 0,
+            room:1,
+            step:0,
+            
+          };
+          navigate({
+
+            pathname: "/booking/room-selection",
+            search: `?${createSearchParams(params)}`,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const disabledCheckInDate = (current) => {
