@@ -5,9 +5,10 @@ const RoomList = ({allRooms,nights}) => {
   
   return (
     <div className="room-list">
-      {allRooms.map((room) => (
+      {allRooms.length>0?allRooms.map((room) => (
         <Room room={room} nights={nights} />
-      ))}
+      )):<p>No rooms available.</p>}
+     
     </div>
   );
 };

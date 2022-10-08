@@ -12,6 +12,9 @@ const BookingSummary = ({
   child,
   nights,
   bookedRoom,
+  room_type,
+  rate_type,
+  rate
 }) => {
   
   return (
@@ -39,16 +42,18 @@ const BookingSummary = ({
         </div>
       </div>
       <Divider />
-      {bookedRoom.length>0 && (
+      
         <RoomSelected
           checkIn={checkIn}
           checkOut={checkOut}
           adult={adult}
           child={child}
           nights={nights}
-          bookedRoom={bookedRoom}
+          room_type={room_type}
+          rate_type={rate_type}
+          room_rate={rate}
         />
-      )}
+    
     </div>
   );
 };

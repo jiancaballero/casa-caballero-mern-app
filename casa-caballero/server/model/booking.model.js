@@ -5,7 +5,14 @@ const bookingSchema = new Schema ({
     room: {type:mongoose.Types.ObjectId,ref:"Room"},
     check_in:Date,
     check_out:Date,
-    status:String
+    status:String,
+    bk_code:String,
+    isGuest:Boolean,
+    guest_details:Object,
+    adult:Number,
+    child:Number,
+    number_of_rooms:Number
+
 })
 
 const booking = mongoose.model("Booking",bookingSchema);

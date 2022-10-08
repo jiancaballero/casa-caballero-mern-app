@@ -12,6 +12,12 @@ const RoomSelected = (props) => {
   const checkOutFormat = checkOut.format("ddd, MMM DD, YYYY").toString();
   const checkInFormat = checkIn.format("ddd, MMM DD, YYYY").toString();
   const nightStr = props.nights + " " + "Night/s";
+  const vat = props.room_rate * props.nights * 0.12;
+  const serviceCharge = props.room_rate * props.nights * 0.1;
+  const localTax = props.room_rate * props.nights * 0.015;
+  const totalTax = serviceCharge + vat + localTax;
+  const ratePerNight = props.room_rate * props.nights;
+  const totalAmount = ratePerNight + totalTax;
   const datesBetween = [];
   while (checkInClone.isBefore(checkOut)) {
     datesBetween.push(checkInClone.format("MMM DD, YYYY"));
@@ -64,11 +70,13 @@ const RoomSelected = (props) => {
           </div>
 
           <div className="flex room-select-container">
-            <h3>Room Name</h3>
-            <h3>Amount</h3>
+            <h3>{props.room_type}</h3>
+            <h3>
+              {ratePerNight.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            </h3>
           </div>
           <div className="room-rate">
-            <h3>Standard Rate</h3>
+            <h3>{props.rate_type}</h3>
             <Collapse ghost>
               <Panel header={nightStr} key="1">
                 <div className="flex night-breakdown">
@@ -78,8 +86,12 @@ const RoomSelected = (props) => {
                     ))}
                   </div>
                   <div>
-                    {datesBetween.map((date) => (
-                      <p>Amount</p>
+                    {datesBetween.map(() => (
+                      <p>
+                        {props.room_rate
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                      </p>
                     ))}
                   </div>
                 </div>
@@ -89,21 +101,27 @@ const RoomSelected = (props) => {
           <div className="flex taxes-fees">
             <h3>Taxes & Fees</h3>
 
-            <h3>Amount</h3>
+            <h3>{totalTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h3>
           </div>
           <Collapse ghost>
             <Panel header="More Details" key="1">
               <div className="flex service-charge">
                 <p>Service Charge (10%)</p>
-                <p>Amount</p>
+                <p>
+                  {serviceCharge
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </p>
               </div>
               <div className="flex VAT-amount">
                 <p>VAT (12%)</p>
-                <p>Amount</p>
+                <p>{vat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
               </div>
               <div className="flex local-tax">
                 <p>Local Tax(1.50%)</p>
-                <p>Amount</p>
+                <p>
+                  {localTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </p>
               </div>
             </Panel>
           </Collapse>
@@ -112,7 +130,7 @@ const RoomSelected = (props) => {
       <Divider />
       <div className="flex booking-total-amount">
         <h1>Total Amount</h1>
-        <h1>P 6,000.00</h1>
+        <h1>{totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h1>
       </div>
     </div>
   );

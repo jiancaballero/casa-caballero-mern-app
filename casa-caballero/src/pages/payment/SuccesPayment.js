@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Result } from "antd";
-const success = () => {
+const SuccessPayment = () => {
   return (
     <div>
     
@@ -19,4 +19,4 @@ const success = () => {
   );
 };
 
-export default success;
+export default SuccessPayment;

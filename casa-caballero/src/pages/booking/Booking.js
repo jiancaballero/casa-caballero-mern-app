@@ -4,6 +4,7 @@ import { Button, message, Steps, Tooltip } from "antd";
 import { UpCircleFilled } from "@ant-design/icons";
 import { BackTop } from "antd";
 import moment from "moment";
+import {useSelector} from 'react-redux';
 // import axios from "axios";
 import RoomList from "../../components/RoomList";
 import axios from "axios";
@@ -17,19 +18,27 @@ const Booking = ({allRooms}) => {
   // TODO:user must be redirected to the homepage when check in is modifid in url
   const navigate = useNavigate();
   const search = useLocation().search;
+  const location = useLocation();
   const checkInStr = new URLSearchParams(search).get("checkIn");
   const checkOutStr = new URLSearchParams(search).get("checkOut");
   const adult = new URLSearchParams(search).get("adult");
   const child = new URLSearchParams(search).get("child");
   const room = new URLSearchParams(search).get("room");
+  
   const checkInDate = moment(checkInStr, "YYYY-MM-DD");
   const checkOutDate = moment(checkOutStr, "YYYY-MM-DD");
   const [numberOfNights, setNumberOfNights] = useState(0);
   const [bookedRoom, setBookedRoom] = useState([]);
+  const availableRooms = useSelector((state)=>state.roomsAvailable);
+  console.log(availableRooms)
   // const [allRooms, setAllRooms] = useState([]);
   // const [allRooms, setAllRooms] = useState([]);
 
   useEffect(() => {
+    
+    if(!search.length>0){
+      navigate( {pathname: "/"},{state:location});
+    }
     setNumberOfNights(checkOutDate.diff(checkInDate, "days"));
   }, []);
   
@@ -73,10 +82,10 @@ const Booking = ({allRooms}) => {
         {/* INSERT CONTENT FROM STEPS ARRAY */}
         <div className="flex step-container">
           <div className="step-content-container">
-            <RoomList allRooms={allRooms} nights={numberOfNights}/>
+            <RoomList allRooms={availableRooms} nights={numberOfNights}/>
           </div>
           {/* BOOKING AMOUNT SECTIONS */}
-          <div className="BookingAmountSection">
+          {/* <div className="BookingAmountSection">
             <BookingSummary
               checkIn={checkInDate}
               checkOut={checkOutDate}
@@ -87,21 +96,8 @@ const Booking = ({allRooms}) => {
               room={room}
             />
 
-            {/* <Button
-              type="primary"
-              disabled={!bookedRoom.length > 0}
-              onClick={saveSelectedRoom}
-            >
-              CONTINUE
-            </Button> */}
-
-            {/* <Button
-                  type="primary"
-                  onClick={() => message.success("Processing complete!")}
-                >
-                  CONTINUE
-                </Button> */}
-          </div>
+           
+          </div> */}
         </div>
       </div>
       <BackTop>

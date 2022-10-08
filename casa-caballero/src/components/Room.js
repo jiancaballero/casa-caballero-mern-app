@@ -3,22 +3,20 @@ import { Button, Image, Divider, Modal, Tabs } from "antd";
 import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import { Tab } from "@mui/joy";
 import moment from "moment";
-const Room = ({ room,nights }) => {
+const Room = ({ room, nights }) => {
   // console.log(room.room.map(room=>console.log(room)))
 
   const navigate = useNavigate();
   const search = useLocation().search;
+
   const [visible, setVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bookedRoom,setBookedRoom] = useState("");
-  const [rateType,setRateType] = useState("");
   const checkInStr = new URLSearchParams(search).get("checkIn");
   const checkOutStr = new URLSearchParams(search).get("checkOut");
   const checkInDate = moment(checkInStr, "YYYY-MM-DD");
   const checkOutDate = moment(checkOutStr, "YYYY-MM-DD");
   const adult = new URLSearchParams(search).get("adult");
   const child = new URLSearchParams(search).get("child");
-  
   const num_of_room = new URLSearchParams(search).get("room");
   const onChange = (key) => {
     console.log(key);
@@ -34,31 +32,33 @@ const Room = ({ room,nights }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  
-  
-  const getBookedRoom = (room,rate) => {
-    
+
+  const getBookedRoom = (room_id,room_type, rateType, rateAmount) => {
+    console.log(room_id)
     const newParams = {
       checkIn: checkInDate.format("YYYY-MM-DD"),
       checkOut: checkOutDate.format("YYYY-MM-DD"),
       adult: adult,
       child: child,
-      room:num_of_room,
-      nights:nights,
-      step:1,
-      rmId: room,
-      rate_type: rate,
+      room: num_of_room,
+      nights: nights,
+      step: 1,
+      room_type: room_type,
+      rate_type: rateType,
+      rate_amount: rateAmount,
+      room_id:room_id
     };
-   
-    navigate({
-      pathname: `/booking/guest-details/`,
-      search: `${createSearchParams(newParams)}`,
-    });
+
+    navigate(
+      {
+        pathname: `/booking/guest-details/`,
+      },
+      { state: newParams }
+    );
   };
-  
+
   return (
     <div className="flex room-container">
-      {/* ROOM IMAGES */}
       <div>
         <Image
           preview={{
@@ -157,15 +157,26 @@ const Room = ({ room,nights }) => {
                   <p>{rate.rate_description}</p>
                 </div>
                 <div className="room-rate-right">
-                  <h3>{rate.rate_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+".00"}</h3>
+                  <h3>
+                    {rate.rate_amount
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </h3>
                   <p>Per night</p>
                   <p>Excluding taxes & fees</p>
                 </div>
               </div>
               <div className="flex book-room-btn">
-                <Button onClick={()=>{
-                  getBookedRoom(room._id,rate.id)
-                }}>
+                <Button
+                  onClick={() => {
+                    getBookedRoom(
+                      room._id,
+                      room.room_title,
+                      rate.rate_type,
+                      rate.rate_amount
+                    );
+                  }}
+                >
                   Book Now
                 </Button>
               </div>

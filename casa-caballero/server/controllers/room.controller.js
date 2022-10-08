@@ -8,20 +8,35 @@ const Booking = require("../model/booking.model");
 
 // {check_in:{$gte:new Date(req.body.startDate)}},{check_in:{$lte:new Date(req.body.endDate)}}]}
 const getAvailableRooms = (req, res) => {
-  console.log(req.body);
+  
   try {
     Booking.find({
       $and: [
         { status: { $eq: "paid" } },
-        { check_in: { $gte: new Date(req.body.booking_start) } },
-        { check_in: { $lte: new Date(req.body.booking_end) } },
+        { check_in: { $gte: new Date(req.body.booking_start).toDateString() } },
+        { check_in: { $lte: new Date(req.body.booking_end).toDateString() } },
       ],
     }).then((data) => {
       const bookedRooms = data.map((booking) => {
         return booking.room;
       });
-      Room.find({ _id: { $nin: bookedRooms } }).then((data) => {
-        res.status(200).send(data);
+
+      Room.find({
+        $and: [
+          { _id: { $nin: bookedRooms } },
+          { max_occupancy: { $gte: req.body.adult } },
+        ],
+      }).then((data) => {
+        const roomTypes = [];
+        const roomType2 = [];
+        for (type of data) {
+          if (!roomTypes.includes(type.room_type)) {
+            roomType2.push(type);
+            roomTypes.push(type.room_type);
+          }
+        }
+        console.log(roomTypes);
+        res.status(200).send(roomType2);
       });
     });
   } catch (error) {
