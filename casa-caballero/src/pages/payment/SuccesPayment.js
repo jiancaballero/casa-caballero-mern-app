@@ -1,18 +1,18 @@
 import React from "react";
 import { Button, Result } from "antd";
+import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 const SuccessPayment = () => {
+  const location = useLocation();
   return (
     <div>
-    
       <Result
         status="success"
         title="Payment Successful!"
-        subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
+        subTitle="We have sent your booking code in your email."
         extra={[
           <Button type="primary" key="console">
-            Go Console
+            View Your Booking Here
           </Button>,
-          <Button key="buy">Buy Again</Button>,
         ]}
       />
     </div>

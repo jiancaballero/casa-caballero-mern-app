@@ -15,7 +15,8 @@ const addBooking = (req, res) => {
     "adult":req.body.adult,
     "child":req.body.child,
     "number_of_rooms":req.body.number_of_rooms,
-    "isGuest":req.body.isGuest
+    "isGuest":req.body.isGuest,
+    "bk_code":req.body.bk_code
   });
 
   try {

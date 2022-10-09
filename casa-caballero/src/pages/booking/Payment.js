@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import BookingSummary from "../../components/BookingSummary";
 import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import moment from "moment";
 import BookingSteps from "../../components/BookingSteps";
 import axios from "axios";
-import SuccessPayment from "../payment/SuccesPayment";
+
 const Payment = () => {
+  var textCode = "";
+  var numCode = "";
+  var result = "";
+
+  var alphabet = "abcdefghijklmnopqrstuvwxyz";
+  var num = "0123456789";
+
+  function textNumCode(textLength, numLength) {
+    for (var i = 0; i < textLength; i++) {
+      textCode += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+    }
+
+    for (var i = 0; i < numLength; i++) {
+      numCode += num.charAt(Math.floor(Math.random() * num.length));
+    }
+  
+    result = textCode.toUpperCase() + numCode;
+
+    textCode = "";
+    numCode = "";
+    return result;
+  }
   const search = useLocation().search;
   const location = useLocation();
-  
+
   const navigate = useNavigate();
   const room_id = location.state.room_id;
   const room_type = location.state.room_type;
@@ -20,42 +42,36 @@ const Payment = () => {
   const child = location.state.childe;
   const room = location.state.room;
   const nights = location.state.nights;
-  const guest_details = location.state.registration
-  const first_name = location.state.firstName;
-  const last_name = location.state.lastName;
-  const phone = location.state.phone;
-  const email = location.state.email;
+  const guest_details = location.state.registration;
   const checkInDate = moment(checkInStr, "YYYY-MM-DD");
   const checkOutDate = moment(checkOutStr, "YYYY-MM-DD");
+  // const [bkCode, setBkCode] = useState("");
   const getPayment = () => {
+    const bkCode = textNumCode(3,4)
+    console.log(bkCode)
     try {
       axios
-      .post("http://localhost:8080/api/bookings", {
-        room_id: room_id,
-        booking_start: checkInDate.format('LL'),
-        booking_end: checkOutDate.format('LL'),
-        isGuest:true,
-        room_type:room_type,
-        guest_details:guest_details,
-        adult:adult,
-        child:child,
-        number_of_rooms:room,
-        
-       
-        
-      }).then((res)=>{
-       console.log(res);
-        if(res.status === 201){
-          navigate({pathname:'/payment/success'});
-        }
-        else{
-          navigate({pathname:'/'});
-        }
-        
-      })
-    } catch (error) {
-      
-    }
+        .post("http://localhost:8080/api/bookings", {
+          room_id: room_id,
+          booking_start: checkInDate.format("LL"),
+          booking_end: checkOutDate.format("LL"),
+          isGuest: true,
+          room_type: room_type,
+          guest_details: guest_details,
+          adult: adult,
+          child: child,
+          number_of_rooms: room,
+          bk_code:bkCode
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 201) {
+            navigate({ pathname: "/payment/success" },{email:res.data.email});
+          } else {
+            navigate({ pathname: "/" });
+          }
+        });
+    } catch (error) {}
   };
   return (
     <div className="PaymentSection">
@@ -81,7 +97,6 @@ const Payment = () => {
               child={child}
               nights={nights}
               room={room}
-             
               room_type={room_type}
               rate_type={rate_type}
               rate={rate_amount}
