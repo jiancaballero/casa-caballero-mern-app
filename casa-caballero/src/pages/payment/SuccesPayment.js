@@ -3,6 +3,10 @@ import { Button, Result } from "antd";
 import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 const SuccessPayment = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const getBooking = ()=>{
+    navigate({pathname:'/manage-bookings'})
+  }
   return (
     <div>
       <Result
@@ -10,7 +14,7 @@ const SuccessPayment = () => {
         title="Payment Successful!"
         subTitle="We have sent your booking code in your email."
         extra={[
-          <Button type="primary" key="console">
+          <Button type="primary" key="console" onClick={getBooking}>
             View Your Booking Here
           </Button>,
         ]}

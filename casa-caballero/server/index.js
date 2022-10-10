@@ -8,9 +8,13 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
+
+// IMPORT BODYPARSER
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
 
 // API Routes
 const roomRoute = require("./routes/room");

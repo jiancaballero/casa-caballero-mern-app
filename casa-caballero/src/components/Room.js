@@ -33,8 +33,8 @@ const Room = ({ room, nights }) => {
     setIsModalOpen(false);
   };
 
-  const getBookedRoom = (room_id,room_type, rateType, rateAmount) => {
-    console.log(room_id)
+  const getBookedRoom = (room_id, room_type, rateType, rateAmount) => {
+    console.log(room_id);
     const newParams = {
       checkIn: checkInDate.format("YYYY-MM-DD"),
       checkOut: checkOutDate.format("YYYY-MM-DD"),
@@ -46,7 +46,7 @@ const Room = ({ room, nights }) => {
       room_type: room_type,
       rate_type: rateType,
       rate_amount: rateAmount,
-      room_id:room_id
+      room_id: room_id,
     };
 
     navigate(
@@ -58,131 +58,135 @@ const Room = ({ room, nights }) => {
   };
 
   return (
-    <div className="flex room-container">
-      <div>
-        <Image
-          preview={{
-            visible: false,
-          }}
-          width={200}
-          src={room.room_images[0]}
-          onClick={() => setVisible(true)}
-        />
-
-        <div
-          style={{
-            display: "none",
-          }}
-        >
-          <Image.PreviewGroup
+    <div className="">
+      <div className="room-card flex">
+        <div className="">
+          <Image
             preview={{
-              visible,
-              onVisibleChange: (vis) => setVisible(vis),
+              visible: false,
+            }}
+            width={200}
+            src={room.room_images[0]}
+            onClick={() => setVisible(true)}
+          />
+
+          <div
+            style={{
+              display: "none",
             }}
           >
-            <Image src={require("../assets/images/room2.jpeg")} />
-            <Image src={require("../assets/images/room2.jpeg")} />
-            <Image src={require("../assets/images/room2.jpeg")} />
-          </Image.PreviewGroup>
+            <Image.PreviewGroup
+              preview={{
+                visible,
+                onVisibleChange: (vis) => setVisible(vis),
+              }}
+            >
+              <Image src={require("../assets/images/room2.jpeg")} />
+              <Image src={require("../assets/images/room2.jpeg")} />
+              <Image src={require("../assets/images/room2.jpeg")} />
+            </Image.PreviewGroup>
+          </div>
         </div>
-      </div>
-      {/* ROOM INFO */}
-      <div className="room-info">
-        <div>
-          <h1>{room.room_title}</h1>
-          <p>{room.room_description}</p>
-        </div>
-
-        <Button type="link" size="small" onClick={showModal}>
-          View more details
-        </Button>
-        <Modal
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          title={room.room_category}
-        >
-          <div className="flex">
-            <div>
-              <h1>{room.room_title}</h1>
-              <p>
-                {room.room_type} | {room.bed.quantity} {room.bed.bed_type}
-              </p>
-              <p>{room.room_description}</p>
-            </div>
-            <div>
-              <Image
-                preview={{
-                  visible: false,
-                }}
-                width={200}
-                src={room.room_images[0]}
-                onClick={() => setVisible(true)}
-              />
-
-              <div
-                style={{
-                  display: "none",
-                }}
-              >
-                <Image.PreviewGroup
-                  preview={{
-                    visible,
-                    onVisibleChange: (vis) => setVisible(vis),
-                  }}
-                >
-                  <Image src={require("../assets/images/room2.jpeg")} />
-                  <Image src={require("../assets/images/room2.jpeg")} />
-                  <Image src={require("../assets/images/room2.jpeg")} />
-                </Image.PreviewGroup>
-              </div>
-            </div>
+        {/* ROOM INFO */}
+        <div className="room-info">
+          <div>
+            <h1>{room.room_title}</h1>
+            <p>{room.room_description}</p>
           </div>
 
-          <Divider />
-
-          <ul>
-            {room.amenities.map((amenity) => (
-              <li>{amenity}</li>
-            ))}
-          </ul>
-        </Modal>
-        <Divider />
-        <div>
-          {room.rate.map((rate) => (
-            <>
-              <div className="flex room-rate-container">
-                <div>
-                  <p>{rate.rate_type}</p>
-                  <p>{rate.rate_description}</p>
-                </div>
-                <div className="room-rate-right">
-                  <h3>
-                    {rate.rate_amount
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </h3>
-                  <p>Per night</p>
-                  <p>Excluding taxes & fees</p>
-                </div>
+          <Button type="link" size="small" onClick={showModal}>
+            View more details
+          </Button>
+          <Modal
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            title={room.room_category}
+          >
+            <div className="flex">
+              <div>
+                <h1>{room.room_title}</h1>
+                <p>
+                  {room.room_type} | {room.bed.quantity} {room.bed.bed_type}
+                </p>
+                <p>{room.room_description}</p>
               </div>
-              <div className="flex book-room-btn">
-                <Button
-                  onClick={() => {
-                    getBookedRoom(
-                      room._id,
-                      room.room_title,
-                      rate.rate_type,
-                      rate.rate_amount
-                    );
+              <div>
+                <Image
+                  preview={{
+                    visible: false,
+                  }}
+                  width={200}
+                  src={room.room_images[0]}
+                  onClick={() => setVisible(true)}
+                />
+
+                <div
+                  style={{
+                    display: "none",
                   }}
                 >
-                  Book Now
-                </Button>
+                  <Image.PreviewGroup
+                    preview={{
+                      visible,
+                      onVisibleChange: (vis) => setVisible(vis),
+                    }}
+                  >
+                    <Image src={require("../assets/images/room2.jpeg")} />
+                    <Image src={require("../assets/images/room2.jpeg")} />
+                    <Image src={require("../assets/images/room2.jpeg")} />
+                  </Image.PreviewGroup>
+                </div>
               </div>
-              <Divider />
-            </>
-          ))}
+            </div>
+
+            <Divider />
+
+            <ul>
+              {room.amenities.map((amenity) => (
+                <li>{amenity}</li>
+              ))}
+            </ul>
+          </Modal>
+          <Divider />
+          <div>
+            {room.rate.map((rate) => (
+              <>
+                <div className="flex room-rate-container">
+                  <div className="rate-type">
+                    <p>{rate.rate_type}</p>
+                    <p>{rate.rate_description}</p>
+                  </div>
+                  <div className="room-rate-right">
+                    <h3>
+                      {rate.rate_amount
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </h3>
+                    <div className="tax-fees-label">
+                      <p>Per night</p>
+                      <p>Excluding taxes & fees</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex book-room-btn">
+                  <Button
+                    onClick={() => {
+                      getBookedRoom(
+                        room._id,
+                        room.room_title,
+                        rate.rate_type,
+                        rate.rate_amount
+                      );
+                    }}
+                  >
+                    Book Now
+                  </Button>
+                </div>
+                <Divider />
+              </>
+            ))}
+          </div>
         </div>
       </div>
     </div>

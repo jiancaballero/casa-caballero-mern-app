@@ -8,6 +8,7 @@ import Booking from './pages/booking/Booking';
 import GuestDetails from './pages/booking/GuestDetails';
 import Payment from './pages/booking/Payment';
 import SuccessPayment from './pages/payment/SuccesPayment';
+import ManageBooking from './pages/booking/ManageBooking';
 
 function App() {
  
@@ -19,6 +20,7 @@ function App() {
     <Route path='/booking/guest-details' element={<GuestDetails/>}/>
     <Route path='/booking/payment' element={<Payment/>}/>
     <Route path='/payment/success' element={<SuccessPayment/>}/>
+    <Route path='/manage-bookings' element={<ManageBooking/>}/>
    </Routes>
    </>
    

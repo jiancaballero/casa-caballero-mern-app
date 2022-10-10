@@ -1,22 +1,27 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 mongoose.connect(
-  "mongodb+srv://jiancaballero:Kasmot.1@cluster0.ikwmk4d.mongodb.net/hotel_dbs"
+  `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.ikwmk4d.mongodb.net/hotel_dbs`
 );
 const Booking = require("../model/booking.model");
 const Room = require("../model/room.model");
+
+// IMPORT NODEMAILER
+const nodemailer = require("nodemailer");
+
 const addBooking = (req, res) => {
   const newBooking = new Booking({
-    "room":req.body.room_id,
-    "check_in":req.body.booking_start,
-    "check_out":req.body.booking_end,
-    "bk_code":req.body.bk_code,
-    "guest_flag":req.body.isGuest,
-    "guest_details":req.body.guest_details,
-    "adult":req.body.adult,
-    "child":req.body.child,
-    "number_of_rooms":req.body.number_of_rooms,
-    "isGuest":req.body.isGuest,
-    "bk_code":req.body.bk_code
+    room: req.body.room_id,
+    check_in: req.body.booking_start,
+    check_out: req.body.booking_end,
+    bk_code: req.body.bk_code,
+    guest_flag: req.body.isGuest,
+    guest_details: req.body.guest_details,
+    adult: req.body.adult,
+    child: req.body.child,
+    number_of_rooms: req.body.number_of_rooms,
+    isGuest: req.body.isGuest,
+    bk_code: req.body.bk_code,
   });
 
   try {
@@ -51,13 +56,12 @@ const addBooking = (req, res) => {
           ],
         }).then((available_rooms) => {
           if (available_rooms.length - active_bookings.length >= 0) {
-            newBooking.status = 'paid';
+            newBooking.status = "paid";
             newBooking.save().then((data) => {
-              
-              
-              res
-                .status(201)
-                .send({ message: "Your booking has been created." , data: data });
+              res.status(201).send({
+                message: "Your booking has been created.",
+                data: data,
+              });
             });
           } else {
             res
@@ -83,6 +87,20 @@ const addBooking = (req, res) => {
     return res.status(400).send({ message: error });
   }
 };
+const getBooking = (req, res) => {
+ 
+  try {
+    Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
+      .populate("room")
+      .then((data) => {
+        console.log(data)
+        res.status(200).send(data);
+      });
+  } catch (error) {
+    res.status(400).send({ message: error });
+  }
+};
 module.exports = {
   addBooking,
+  getBooking,
 };

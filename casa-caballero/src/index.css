@@ -4,14 +4,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
 }
 img {
   width: 100%;
 }
-body {
-  font-family: "Helvetica Neue", Helvetica;
-  src: url("./assets/font/HelveticaNeue.ttc");
-}
+
 .container {
   max-width: 1280px;
   padding: 0 5%;
@@ -199,17 +197,8 @@ body {
   background-size: cover;
   background-image: url(./assets/images/suite.jpeg);
 }
-.BookingPage {
-  background: #e0d6cd;
 
-  padding: 2em 0;
-}
-.step-container {
-  gap: 30px;
-}
-.step-content-container {
-  flex: 1 1 60%;
-}
+
 .check-in-time,
 .check-out-time {
   gap: 8px;
@@ -243,12 +232,7 @@ body {
 .room-inital-details {
   margin-bottom: 1.8em;
 }
-.room-container {
-  background: #fff;
-  padding: 1.5em;
-  gap: 20px;
-  margin-bottom: 1.4em;
-}
+
 .room-info {
   flex: 1 1 70%;
 }
@@ -261,6 +245,7 @@ body {
 }
 .room-rate-container {
   justify-content: space-between;
+  margin-bottom: 2em;
 }
 .rate-desc {
   text-align: right;
@@ -270,135 +255,88 @@ body {
 }
 .room-rate-right {
   text-align: right;
+}
+.guest_details_section {
+  padding-top: 2em;
+  background: #e0d6cd;
+}
+.guest_details_container {
+  padding: 4em;
+  justify-content: space-around;
+}
+
+.guest_left {
+  padding: 4em;
+  background: #fff;
+  height: fit-content;
+}
+.guest_right {
+  padding: 2em;
+  background: #fff;
+}
+.PaymentSection {
+  padding-top: 2em;
+  background: #e0d6cd;
+}
+.payment-container {
+  padding: 4em;
+  justify-content: space-between;
+}
+.payment-right {
+  padding: 2em;
+  background: #fff;
+}
+.DatesAndGuest {
+  background: #c7c4c0;
+  padding: 2.5em;
+  margin-bottom: 2em;
+}
+
+/* CHOOSE YOUR ROOM SECTION */
+.room-selection-header h1 {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size:4em;
+}
+.BookingPage {
+  background: #e0d6cd;
+  padding: 2em 0;
+}
+.room-container {
+  background: #EAE9E8;
+  padding: 1.5em;
+  gap: 20px;
+  margin-bottom: 1.4em;
+}
+.room-card{
+  background: #fff;
+  padding: 1.5em;
+  margin-bottom:3em;
+  gap:40px;
+}
+.step-container {
+  padding:0;
   
 }
-.guest_details_section{
-  padding-top:2em;
-  background: #e0d6cd;
+.step-content-container {
+  flex: 1 1 65%;
+  
+  
 }
-.guest_details_container{
-  padding:4em;
-  justify-content:space-around;
-}
-
-
-.guest_left{
-  padding:4em;
-  background: #fff;
-  height:fit-content;
-}
-.guest_right{
+.booking-filters{
+  flex: 1 1 35%;
+  background: #EAE9E8;
   padding:2em;
-  background: #fff;
 }
-.PaymentSection{
-  padding-top:2em;
-  background: #e0d6cd;
-}
-.payment-container{
-  padding:4em;
-  justify-content:space-between;
-}
-.payment-right{
-  padding:2em;
-  background: #fff;
-}
-.DatesAndGuest{
-  background:#C7C4C0;
-  padding:2.5em;
-  margin-bottom:2em;
+.room-list{
+  padding:3em;
 }
 
-/* Carousel */
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
+/* ROOM DETAILS */
+.tax-fees-label p{
+  margin:0;
 }
-
-/* Make the images invisible by default */
-.Containers {
-  display: none;
-}
-
-/* forward & Back buttons */
-.Back, .forward {
-  cursor: pointer;
-  position: absolute;
-  top: 48%;
-  width: auto;
-  margin-top: -23px;
-  padding: 17px;
-  color: grey;
-  font-weight: bold;
-  font-size: 19px;
-  transition: 0.4s ease;
-  border-radius: 0 5px 5px 0;
-  user-select: none;
-}
-
-/* Place the "forward button" to the right */
-.forward {
-  right: 0;
-  border-radius: 4px 0 0 4px;
-}
-
-/*when the user hovers,add a black background with some little opacity */
-.Back:hover, .forward:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
-/* Caption Info */
-.Info {
-  color: #e3e3e3;
-  font-size: 16px;
-  padding: 10px 14px;
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  text-align: center;
-}
-
-/* Worknumbering (1/3 etc) */
-.MessageInfo {
-  color: #f2f2f3;
-  font-size: 14px;
-  padding: 10px 14px;
-  position: absolute;
-  top: 0;
-}
-
-/* The circles or bullets and indicators */
-.dots {
-  cursor: pointer;
-  height: 16px;
-  width: 16px;
-  margin: 0 3px;
-  background-color: #acc;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.5s ease;
-}
-
-.enable, .dots:hover {
-  background-color: #717161;
-}
-
-/* Faint animation */
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.4s;
-  animation-name: fade;
-  animation-duration: 1.4s;
-}
-
-@-webkit-keyframes fade {
-  from {opacity: .5}
-  to {opacity: 2}
-}
-
-@keyframes fade {
-  from {opacity: .5}
-  to {opacity: 2}
+.rate-type p{
+  margin:0;
 }
