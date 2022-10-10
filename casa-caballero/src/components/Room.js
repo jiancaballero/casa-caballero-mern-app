@@ -47,6 +47,7 @@ const Room = ({ room, nights }) => {
       rate_type: rateType,
       rate_amount: rateAmount,
       room_id: room_id,
+      
     };
 
     navigate(

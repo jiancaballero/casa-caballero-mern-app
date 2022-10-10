@@ -11,7 +11,8 @@ const bookingSchema = new Schema ({
     guest_details:Object,
     adult:Number,
     child:Number,
-    number_of_rooms:Number
+    number_of_rooms:Number,
+    // booking_price:Number
 
 })
 

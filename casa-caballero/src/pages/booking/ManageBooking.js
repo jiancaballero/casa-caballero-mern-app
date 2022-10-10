@@ -15,6 +15,7 @@ const ManageBooking = () => {
   const [form] = Form.useForm();
   const [bkCode, setBkCode] = useState("");
   const [bookingDetails, setBookingDetails] = useState({});
+  
   const onFinish = (values) => {
     return values;
   };
@@ -53,7 +54,7 @@ const ManageBooking = () => {
   };
   const getBooking = () => {
     try {
-      axios.post(`http://localhost:8080/api/bookings/${bkCode}`).then((res) => {
+      axios.get(`http://localhost:8080/api/bookings/${bkCode}`).then((res) => {
         if (res.status === 200) {
           console.log(res.data);
           setBookingDetails(res.data);
@@ -94,11 +95,15 @@ const ManageBooking = () => {
             <Button type="primary" htmlType="submit" onClick={getBooking}>
               Continue
             </Button>
-            {bookingDetails && (
+            {Object.keys(bookingDetails).length>0 && (
               <ul>
                 <li>Check-in:{bookingDetails?.check_in}</li>
                 <li>Check-out:{bookingDetails?.check_out}</li>
-                <li>Room:{bookingDetails?.room?.room_type}</li>
+                <li>Adult:{bookingDetails?.adult}</li>
+                <li>Room Type:{bookingDetails?.room.room_type}</li>
+                <li>Room Name:{bookingDetails?.room.room_title}</li>
+                
+                {/* <li>Amount Paid:{bookingDetails?.price}</li> */}
               </ul>
             )}
           </Form.Item>
