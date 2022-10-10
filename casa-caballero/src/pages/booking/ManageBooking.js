@@ -14,7 +14,7 @@ import axios from "axios";
 const ManageBooking = () => {
   const [form] = Form.useForm();
   const [bkCode, setBkCode] = useState("");
-  const [bookingDetails,setBookingDetails] = useState({});
+  const [bookingDetails, setBookingDetails] = useState({});
   const onFinish = (values) => {
     return values;
   };
@@ -56,7 +56,7 @@ const ManageBooking = () => {
       axios.post(`http://localhost:8080/api/bookings/${bkCode}`).then((res) => {
         if (res.status === 200) {
           console.log(res.data);
-          setBookingDetails(res.data)
+          setBookingDetails(res.data);
         } else {
           console.log("display error 404 page");
         }
@@ -94,13 +94,13 @@ const ManageBooking = () => {
             <Button type="primary" htmlType="submit" onClick={getBooking}>
               Continue
             </Button>
-            <ul>
-                <li>Check-in:{bookingDetails.check_in}</li>
-                <li>Check-out:{bookingDetails.check_out}</li>
-                <li>Room:{bookingDetails.room.room_type}</li>
-               
-               
-            </ul>
+            {bookingDetails && (
+              <ul>
+                <li>Check-in:{bookingDetails?.check_in}</li>
+                <li>Check-out:{bookingDetails?.check_out}</li>
+                <li>Room:{bookingDetails?.room?.room_type}</li>
+              </ul>
+            )}
           </Form.Item>
         </Form>
       </div>
