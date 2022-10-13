@@ -23,17 +23,30 @@ const addBooking = (req, res) => {
     isGuest: req.body.isGuest,
     bk_code: req.body.bk_code,
   });
+  //TODO:
+  // for GUESTS:
+  // challenge: check if available parin ang room na yun (check the room type)
+  // 1. after click the continue button,
+  // //1. get room type from frontend through body
+  //2. get all rooms na may ganon room type
+  //3. kunin sa bookings collection ang lahat ng booking na active na may ganung book type
+  //4. room available based on given room type - active booking given room type >=0
+  // if greater than 0,  booking data will be saved in the db, else room not available please select another room.
+
+  // 2. details of the user coming from the data in the url (second parameter) will be saved in the guest_detail field
 
   try {
     // all rooms based on given room type
-    Room.find({ room_type: { $eq: req.body.room_type } }).then((room_type) => {
-      const rooms = room_type.map((room) => {
+    const room_type = req.body.room_type;
+    Room.find({ room_type: room_type }).then((data) => {
+      const rooms = data.map((room) => {
         return room._id;
       });
+      const room_count= data.length;
       // active bookings based on given room type
       Booking.find({
         $and: [
-          { status: { $eq: "paid" } },
+          { status: "paid" },
           { room: { $in: rooms } },
           {
             check_in: {
@@ -48,14 +61,16 @@ const addBooking = (req, res) => {
         const bookedRooms = active_bookings.map((booking) => {
           return booking.room;
         });
+        const room_booked_count = active_bookings.length
+       
         // available rooms based on room type
-        Room.find({
-          $and: [
-            { _id: { $nin: bookedRooms } },
-            { room_type: req.body.room_type },
-          ],
-        }).then((available_rooms) => {
-          if (available_rooms.length - active_bookings.length >= 0) {
+        // Room.find({
+        //   $and: [
+        //     { _id: { $nin: bookedRooms } },
+        //     { room_type: req.body.room_type },
+        //   ],
+        // }).then((available_rooms) => {
+          if (room_count - room_booked_count > 0) {
             newBooking.status = "paid";
             newBooking.save().then((data) => {
               res.status(201).send({
@@ -64,36 +79,22 @@ const addBooking = (req, res) => {
               });
             });
           } else {
-            res
-              .status(404)
-              .send({ message: "May nauna na magbook bagal mo kasi e" });
+            
+            res.status(404).send({ message: "May nauna na magbook " });
           }
-        });
+        // });
       });
     });
-
-    //TODO:
-    // for GUESTS:
-    // challenge: check if available parin ang room na yun (check the room type)
-    // 1. after click the continue button,
-    // //1. get room type from frontend through body
-    //2. get all rooms na may ganon room type
-    //3. kunin sa bookings collection ang lahat ng booking na active na may ganung book type
-    //4. room available based on given room type - active booking given room type >=0
-    // if greater than 0,  booking data will be saved in the db, else room not available please select another room.
-
-    // 2. details of the user coming from the data in the url (second parameter) will be saved in the guest_detail field
   } catch (error) {
     return res.status(400).send({ message: error });
   }
 };
 const getBooking = (req, res) => {
- 
   try {
     Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
       .populate("room")
       .then((data) => {
-        console.log(data)
+        console.log(data);
         res.status(200).send(data);
       });
   } catch (error) {
