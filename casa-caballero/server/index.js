@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // API Routes
 const roomRoute = require("./routes/room");
 const bookingRoute = require("./routes/booking");
+
 // API Endpoints
 app.use("/api/rooms", roomRoute);
 app.use("/api/bookings", bookingRoute);

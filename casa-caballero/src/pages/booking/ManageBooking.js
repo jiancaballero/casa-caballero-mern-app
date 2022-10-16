@@ -15,7 +15,7 @@ const ManageBooking = () => {
   const [form] = Form.useForm();
   const [bkCode, setBkCode] = useState("");
   const [bookingDetails, setBookingDetails] = useState({});
-  
+
   const onFinish = (values) => {
     return values;
   };
@@ -56,12 +56,27 @@ const ManageBooking = () => {
     try {
       axios.get(`http://localhost:8080/api/bookings/${bkCode}`).then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           setBookingDetails(res.data);
         } else {
           console.log("display error 404 page");
         }
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cancelBooking = () => {
+    try {
+      axios
+        .put("http://localhost:8080/api/bookings/cancel", {bk_code:bkCode})
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("Booking Canclled");
+          } else {
+            console.log("display error 404 page");
+          }
+        });
     } catch (error) {
       console.log(error);
     }
@@ -95,15 +110,22 @@ const ManageBooking = () => {
             <Button type="primary" htmlType="submit" onClick={getBooking}>
               Continue
             </Button>
-            {Object.keys(bookingDetails).length>0 && (
+            {Object.keys(bookingDetails).length > 0 && (
               <ul>
                 <li>Check-in:{bookingDetails?.check_in}</li>
                 <li>Check-out:{bookingDetails?.check_out}</li>
                 <li>Adult:{bookingDetails?.adult}</li>
                 <li>Room Type:{bookingDetails?.room.room_type}</li>
                 <li>Room Name:{bookingDetails?.room.room_title}</li>
+                <li>Status:{bookingDetails?.status}</li>
+              
+
+                <li>
+                  {bookingDetails.status !=='cancelled' &&
+                      (<Button onClick={cancelBooking}>Cancel Booking</Button>)
+                  }
                 
-                {/* <li>Amount Paid:{bookingDetails?.price}</li> */}
+                </li>
               </ul>
             )}
           </Form.Item>

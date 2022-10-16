@@ -94,14 +94,27 @@ const getBooking = (req, res) => {
     Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
       .populate("room")
       .then((data) => {
-        console.log(data);
+       
         res.status(200).send(data);
       });
   } catch (error) {
     res.status(400).send({ message: error });
   }
 };
+const cancelBooking = (req, res) => {
+  console.log(req.body)
+  try {
+    Booking.updateOne({bk_code:req.body.bk_code},[{$set:{status:"cancelled"}}]).then(data=>{
+      if(data.modifiedCount ===1){
+        res.status(200).send(data);
+      }
+    })
+  } catch (error) {
+    res.status(400).send({ message: error });
+  }
+}
 module.exports = {
   addBooking,
   getBooking,
+  cancelBooking
 };

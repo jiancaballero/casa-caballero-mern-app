@@ -175,7 +175,7 @@ const Room = ({ room, nights }) => {
                     onClick={() => {
                       getBookedRoom(
                         room._id,
-                        room.room_title,
+                        room.room_type,
                         rate.rate_type,
                         rate.rate_amount
                       );
