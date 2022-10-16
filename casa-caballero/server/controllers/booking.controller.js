@@ -10,6 +10,19 @@ const Room = require("../model/room.model");
 const nodemailer = require("nodemailer");
 
 const addBooking = (req, res) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD,
+    },
+  });
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: req.body.guest_details.email,
+    subject: `BOOKING CODE: ${req.body.bk_code}`,
+    text: `Thank you for booking at CASA CABALLERO website. Here is your booking code:${req.body.bk_code}. You may manage your bookings at CASA CABALLERO official website under the manage booking page`,
+  };
   const newBooking = new Booking({
     room: req.body.room_id,
     check_in: req.body.booking_start,
@@ -23,17 +36,6 @@ const addBooking = (req, res) => {
     isGuest: req.body.isGuest,
     bk_code: req.body.bk_code,
   });
-  //TODO:
-  // for GUESTS:
-  // challenge: check if available parin ang room na yun (check the room type)
-  // 1. after click the continue button,
-  // //1. get room type from frontend through body
-  //2. get all rooms na may ganon room type
-  //3. kunin sa bookings collection ang lahat ng booking na active na may ganung book type
-  //4. room available based on given room type - active booking given room type >=0
-  // if greater than 0,  booking data will be saved in the db, else room not available please select another room.
-
-  // 2. details of the user coming from the data in the url (second parameter) will be saved in the guest_detail field
 
   try {
     // all rooms based on given room type
@@ -42,7 +44,7 @@ const addBooking = (req, res) => {
       const rooms = data.map((room) => {
         return room._id;
       });
-      const room_count= data.length;
+      const room_count = data.length;
       // active bookings based on given room type
       Booking.find({
         $and: [
@@ -61,27 +63,26 @@ const addBooking = (req, res) => {
         const bookedRooms = active_bookings.map((booking) => {
           return booking.room;
         });
-        const room_booked_count = active_bookings.length
-       
-        // available rooms based on room type
-        // Room.find({
-        //   $and: [
-        //     { _id: { $nin: bookedRooms } },
-        //     { room_type: req.body.room_type },
-        //   ],
-        // }).then((available_rooms) => {
-          if (room_count - room_booked_count > 0) {
-            newBooking.status = "paid";
-            newBooking.save().then((data) => {
-              res.status(201).send({
-                message: "Your booking has been created.",
-                data: data,
-              });
+        const room_booked_count = active_bookings.length;
+
+        if (room_count - room_booked_count > 0) {
+          newBooking.status = "paid";
+          newBooking.save().then((data) => {
+            transporter.sendMail(mailOptions, (err, info) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("EMAIL SENT");
+                res.status(201).send({
+                  message: "Your booking has been created.",
+                  data: data,
+                });
+              }
             });
-          } else {
-            
-            res.status(404).send({ message: "May nauna na magbook " });
-          }
+          });
+        } else {
+          res.status(404).send({ message: "May nauna na magbook " });
+        }
         // });
       });
     });
@@ -94,7 +95,6 @@ const getBooking = (req, res) => {
     Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
       .populate("room")
       .then((data) => {
-       
         res.status(200).send(data);
       });
   } catch (error) {
@@ -102,19 +102,21 @@ const getBooking = (req, res) => {
   }
 };
 const cancelBooking = (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
-    Booking.updateOne({bk_code:req.body.bk_code},[{$set:{status:"cancelled"}}]).then(data=>{
-      if(data.modifiedCount ===1){
+    Booking.updateOne({ bk_code: req.body.bk_code }, [
+      { $set: { status: "cancelled" } },
+    ]).then((data) => {
+      if (data.modifiedCount === 1) {
         res.status(200).send(data);
       }
-    })
+    });
   } catch (error) {
     res.status(400).send({ message: error });
   }
-}
+};
 module.exports = {
   addBooking,
   getBooking,
-  cancelBooking
+  cancelBooking,
 };
