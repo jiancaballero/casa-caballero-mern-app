@@ -1,6 +1,6 @@
-import React from "react";
+import React,{useState} from "react";
 
-import { Carousel, Button, Card, Space, Badge } from "antd";
+import { Carousel, Button, Card, Space, Badge,Spin } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -51,9 +51,13 @@ const Home = () => {
   const onChange = (currentSlide) => {
     return currentSlide;
   };
-
+  
+  const [loading, setLoading] = useState(false);
+  const setLoader = (isLoading)=>{
+    setLoading(isLoading);
+  }
   return (
-    <div>
+    <Spin tip="Searching for rooms" spinning={loading}>
       <Carousel autoplay effect="fade">
         <div className="carousel">
           <h1 style={contentStyle1}>
@@ -88,7 +92,7 @@ const Home = () => {
       </Carousel>
       <div className="DatesAndGuest">
         <div className="container dates-guest-container">
-          <CheckAvailability />
+          <CheckAvailability setLoader={setLoader} />
         </div>
       </div>
       <div className="About">
@@ -302,7 +306,7 @@ const Home = () => {
           <div className="contact-right"></div>
         </div>
       </div>
-    </div>
+    </Spin>
   );
 };
 

@@ -87,7 +87,7 @@ const addBooking = (req, res) => {
             });
           });
         } else {
-          res.status(404).send({ message: "May nauna na magbook " });
+          res.status(400).send({ message: "Sorry. this room has already been booked. Please select a different room" });
         }
         // });
       });
@@ -99,10 +99,14 @@ const addBooking = (req, res) => {
 const getBooking = (req, res) => {
   try {
     Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
-      .populate(["room"])
+      .populate("room")
       .then((data) => {
-        console.log(data);
-        res.status(200).send(data);
+        if(data!==null){
+          res.status(200).send(data)
+        }
+        else{
+          res.status(400).send({message:"No booking found",data:data})
+        }
       });
   } catch (error) {
     res.status(400).send({ message: error });
@@ -112,8 +116,8 @@ const cancelBooking = (req, res) => {
   const mailOptions = {
     from: process.env.EMAIL,
     to: req.body.email,
-    subject: `BOOKING CODE:${req.body.bk_code} HAS BEEN CANCELLED`,
-    text: `Your booking (${req.body.bk_code}) has been successfully cancelled`,
+    subject: `YOUR BOOKING HAS BEEN CANCELLED`,
+    text: `You have successfully cancelled your booking (${req.body.bk_code})`,
   };
   try {
     Booking.updateOne({ bk_code: req.body.bk_code }, [
@@ -126,12 +130,11 @@ const cancelBooking = (req, res) => {
           } else {
             console.log("EMAIL SENT");
             res.status(200).send({
-              message: "Your booking has been cancelled.",
+              message: "Your booking has been cancelled. We sent you a confirmation in your email.",
               data: data,
             });
           }
         });
-      
       }
     });
   } catch (error) {

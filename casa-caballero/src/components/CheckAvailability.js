@@ -6,12 +6,12 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 // useDispatch = action, payload
 // useSelector = access the state which is in the reducer file
-const CheckAvailability = () => {
+const CheckAvailability = ({setLoader}) => {
   const [checkInDate, setCheckInDate] = useState(moment());
   const [checkOutDate, setCheckOutDate] = useState(moment().add(1, "days"));
   const [checkOutOpen, setCheckOutOpen] = useState(false);
   const [adult,setAdult] = useState(1);
-  const [allRooms, setAllRooms] = useState([]);
+  
   const dispatch = useDispatch();
   const getCheckIn = (date) => {
     const checkInCopy = moment(date).clone();
@@ -26,8 +26,9 @@ const CheckAvailability = () => {
   }
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  
   const searchRooms = () => {
+    setLoader(true);
     try {
       
       axios
@@ -38,6 +39,7 @@ const CheckAvailability = () => {
         })
         .then((res) => {
           if (res.status === 200) {
+            setLoader(false);
             dispatch({type:"SET_ROOMS_AVAILABLE",payload:res.data})
             const params = {
               checkIn: checkInDate.format("YYYY-MM-DD"),

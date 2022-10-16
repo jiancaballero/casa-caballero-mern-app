@@ -8,15 +8,23 @@ import {
   InputNumber,
   Row,
   Select,
+  Alert,
+  Spin
 } from "antd";
 import axios from "axios";
 import moment from "moment";
+import ErrorMessage from "../../components/ErrorMessage";
+import SuccessMessage from "../../components/SuccessMessage";
 
 const ManageBooking = () => {
   const [form] = Form.useForm();
   const [bkCode, setBkCode] = useState("");
   const [bookingDetails, setBookingDetails] = useState({});
-
+  const [hasError, setHasError] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [noBookingError, setNoBookingError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const onFinish = (values) => {
     return values;
   };
@@ -54,26 +62,43 @@ const ManageBooking = () => {
     setBkCode(e.target.value);
   };
   const getBooking = () => {
+    setLoading(true);
     try {
-      axios.get(`http://localhost:8080/api/bookings/${bkCode}`).then((res) => {
-        if (res.status === 200) {
-          setBookingDetails(res.data);
-        } else {
-          console.log("display error 404 page");
-        }
-      });
+      axios
+        .get(`http://localhost:8080/api/bookings/${bkCode}`)
+        .then((res) => {
+          if (res.status === 200) {
+            setLoading(false);
+            setHasError(false);
+            setBookingDetails(res.data);
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          setEmailSent(false);
+          setBookingDetails({});
+          setHasError(true);
+          setNoBookingError(err.response.data.message);
+        });
     } catch (error) {
       console.log(error);
     }
   };
 
   const cancelBooking = () => {
+    setLoading(true);
     try {
       axios
-        .put("http://localhost:8080/api/bookings/cancel", { bk_code: bkCode,email:bookingDetails.guest_details.email })
+        .put("http://localhost:8080/api/bookings/cancel", {
+          bk_code: bkCode,
+          email: bookingDetails.guest_details.email,
+        })
         .then((res) => {
           if (res.status === 200) {
-            console.log("Booking Canclled");
+            setLoading(false);
+            setEmailSent(true);
+            setSuccessMessage(res.data.message);
+            setBookingDetails({});
           } else {
             console.log("display error 404 page");
           }
@@ -82,9 +107,19 @@ const ManageBooking = () => {
       console.log(error);
     }
   };
+
   return (
-    <div>
+    <Spin tip="Processing your request" spinning={loading}>
       <div className="guest_left">
+        {hasError && (
+          <ErrorMessage message={noBookingError}/>
+         
+        )}
+         {emailSent && (
+          <SuccessMessage message={successMessage}/>
+         
+        )}
+
         <p>Please check your booking code in your email.</p>
 
         <Form
@@ -115,7 +150,12 @@ const ManageBooking = () => {
             </Button>
             {Object.keys(bookingDetails).length > 0 && (
               <ul>
-                 <li>Name:{bookingDetails?.guest_details.firstName +" "+bookingDetails?.guest_details.lastName  }</li>
+                <li>
+                  Name:
+                  {bookingDetails?.guest_details.firstName +
+                    " " +
+                    bookingDetails?.guest_details.lastName}
+                </li>
                 <li>
                   Check-in:
                   {new Date(bookingDetails?.check_in).toLocaleDateString(
@@ -160,7 +200,7 @@ const ManageBooking = () => {
           </Form.Item>
         </Form>
       </div>
-    </div>
+    </Spin>
   );
 };
 

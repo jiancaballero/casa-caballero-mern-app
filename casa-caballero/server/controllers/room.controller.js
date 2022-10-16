@@ -44,23 +44,7 @@ const getAvailableRooms = (req, res) => {
     return res.status(400).send({ message: error });
   }
 
-  // try {
-
-  //   Booking.find({
-  //     $and: [{ status: { $eq: "paid" } },{check_in:{$gte:new Date(arrival.startDate)}},{check_in:{$lte:new Date(arrival.endDate)}}],
-  //   }).then((data) => {
-  //     const bookedRooms = data.map((booking) =>{
-  //       return booking.room
-  //     })
-  //     Room.find({_id:{$nin:bookedRooms}}).then((data)=>{
-  //       res.send(data);
-  //     })
-
-  //   });
-  //   // return res.status(200).send(rooms);
-  // } catch (error) {
-  //   return res.status(400).send({ message: error });
-  // }
+  
 };
 
 // insert controller functions
