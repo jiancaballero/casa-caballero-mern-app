@@ -11,12 +11,17 @@ const BookingSummary = ({
   adult,
   child,
   nights,
-  bookedRoom,
+  room,
   room_type,
   rate_type,
-  rate
+  rate,
+  vat,
+  serviceCharge,
+  localTax,
+  totalTax,
+  totalAmount,
+  ratePerNight,
 }) => {
-  
   return (
     <div>
       {" "}
@@ -42,18 +47,22 @@ const BookingSummary = ({
         </div>
       </div>
       <Divider />
-      
-        <RoomSelected
-          checkIn={checkIn}
-          checkOut={checkOut}
-          adult={adult}
-          child={child}
-          nights={nights}
-          room_type={room_type}
-          rate_type={rate_type}
-          room_rate={rate}
-        />
-    
+      <RoomSelected
+        checkIn={checkIn}
+        checkOut={checkOut}
+        adult={adult}
+        child={child}
+        nights={nights}
+        room_type={room_type}
+        rate_type={rate_type}
+        room_rate={rate}
+        vat={vat}
+        serviceCharge={serviceCharge}
+        localTax={localTax}
+        totalTax={totalTax}
+        totalAmount={totalAmount}
+        ratePerNight={ratePerNight}
+      />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import {
   Select,
 } from "antd";
 import axios from "axios";
+import moment from "moment";
 
 const ManageBooking = () => {
   const [form] = Form.useForm();
@@ -69,7 +70,7 @@ const ManageBooking = () => {
   const cancelBooking = () => {
     try {
       axios
-        .put("http://localhost:8080/api/bookings/cancel", {bk_code:bkCode})
+        .put("http://localhost:8080/api/bookings/cancel", { bk_code: bkCode,email:bookingDetails.guest_details.email })
         .then((res) => {
           if (res.status === 200) {
             console.log("Booking Canclled");
@@ -84,6 +85,8 @@ const ManageBooking = () => {
   return (
     <div>
       <div className="guest_left">
+        <p>Please check your booking code in your email.</p>
+
         <Form
           {...formItemLayout}
           form={form}
@@ -98,7 +101,7 @@ const ManageBooking = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your first name",
+                message: "Please input your booking code ",
                 whitespace: true,
               },
             ]}
@@ -112,19 +115,45 @@ const ManageBooking = () => {
             </Button>
             {Object.keys(bookingDetails).length > 0 && (
               <ul>
-                <li>Check-in:{bookingDetails?.check_in}</li>
-                <li>Check-out:{bookingDetails?.check_out}</li>
+                 <li>Name:{bookingDetails?.guest_details.firstName +" "+bookingDetails?.guest_details.lastName  }</li>
+                <li>
+                  Check-in:
+                  {new Date(bookingDetails?.check_in).toLocaleDateString(
+                    undefined,
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )}
+                </li>
+                <li>
+                  Check-out:
+                  {new Date(bookingDetails?.check_out).toLocaleDateString(
+                    undefined,
+                    { year: "numeric", month: "long", day: "numeric" }
+                  )}
+                </li>
+                <li>Number of nights:{bookingDetails?.nights}</li>
                 <li>Adult:{bookingDetails?.adult}</li>
                 <li>Room Type:{bookingDetails?.room.room_type}</li>
                 <li>Room Name:{bookingDetails?.room.room_title}</li>
                 <li>Status:{bookingDetails?.status}</li>
-              
+                <li>Rate Type:{bookingDetails?.room_rate.type}</li>
+                <li>
+                  Rate Amount:
+                  {bookingDetails?.room_rate.amount
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </li>
+                <li>
+                  Total Price:
+                  {bookingDetails?.price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  (tax included)
+                </li>
 
                 <li>
-                  {bookingDetails.status !=='cancelled' &&
-                      (<Button onClick={cancelBooking}>Cancel Booking</Button>)
-                  }
-                
+                  {bookingDetails.status !== "cancelled" && (
+                    <Button onClick={cancelBooking}>Cancel Booking</Button>
+                  )}
                 </li>
               </ul>
             )}

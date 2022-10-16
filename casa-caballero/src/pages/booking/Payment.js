@@ -42,9 +42,16 @@ const Payment = () => {
   const child = location.state.childe;
   const room = location.state.room;
   const nights = location.state.nights;
+  const total = location.state.total
   const guest_details = location.state.registration;
   const checkInDate = moment(checkInStr, "YYYY-MM-DD");
   const checkOutDate = moment(checkOutStr, "YYYY-MM-DD");
+  const vat = rate_amount * nights * 0.12;
+  const serviceCharge = rate_amount * nights * 0.1;
+  const localTax = rate_amount * nights * 0.015;
+  const totalTax = serviceCharge + vat + localTax;
+  const ratePerNight = rate_amount * nights;
+  const totalAmount = ratePerNight + totalTax;
   // const [bkCode, setBkCode] = useState("");
   const getPayment = () => {
     const bkCode = textNumCode(3,4)
@@ -61,7 +68,11 @@ const Payment = () => {
           adult: adult,
           child: child,
           number_of_rooms: room,
-          bk_code:bkCode
+          bk_code:bkCode,
+          rate_amount:rate_amount,
+          rate_type:rate_type,
+          nights:nights,
+          total:total
         })
         .then((res) => {
           console.log(res);
@@ -90,7 +101,7 @@ const Payment = () => {
           </div>
 
           <div className="payment-right">
-            <BookingSummary
+          <BookingSummary
               checkIn={checkInDate}
               checkOut={checkOutDate}
               adult={adult}
@@ -100,6 +111,12 @@ const Payment = () => {
               room_type={room_type}
               rate_type={rate_type}
               rate={rate_amount}
+              vat={vat}
+              serviceCharge={serviceCharge}
+              localTax={localTax}
+              totalTax={totalTax}
+              totalAmount={totalAmount}
+              ratePerNight={ratePerNight}
             />
           </div>
         </div>

@@ -33,8 +33,8 @@ const Room = ({ room, nights }) => {
     setIsModalOpen(false);
   };
 
-  const getBookedRoom = (room_id, room_type, rateType, rateAmount) => {
-    console.log(room_id);
+  const getBookedRoom = (room_id, room_type, rateType, rateAmount,rate_id) => {
+    
     const newParams = {
       checkIn: checkInDate.format("YYYY-MM-DD"),
       checkOut: checkOutDate.format("YYYY-MM-DD"),
@@ -47,6 +47,7 @@ const Room = ({ room, nights }) => {
       rate_type: rateType,
       rate_amount: rateAmount,
       room_id: room_id,
+      rate_id:rate_id
       
     };
 
@@ -177,7 +178,8 @@ const Room = ({ room, nights }) => {
                         room._id,
                         room.room_type,
                         rate.rate_type,
-                        rate.rate_amount
+                        rate.rate_amount,
+                        rate.id
                       );
                     }}
                   >

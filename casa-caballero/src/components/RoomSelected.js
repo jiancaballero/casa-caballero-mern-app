@@ -12,12 +12,7 @@ const RoomSelected = (props) => {
   const checkOutFormat = checkOut.format("ddd, MMM DD, YYYY").toString();
   const checkInFormat = checkIn.format("ddd, MMM DD, YYYY").toString();
   const nightStr = props.nights + " " + "Night/s";
-  const vat = props.room_rate * props.nights * 0.12;
-  const serviceCharge = props.room_rate * props.nights * 0.1;
-  const localTax = props.room_rate * props.nights * 0.015;
-  const totalTax = serviceCharge + vat + localTax;
-  const ratePerNight = props.room_rate * props.nights;
-  const totalAmount = ratePerNight + totalTax;
+ 
   const datesBetween = [];
   while (checkInClone.isBefore(checkOut)) {
     datesBetween.push(checkInClone.format("MMM DD, YYYY"));
@@ -72,7 +67,7 @@ const RoomSelected = (props) => {
           <div className="flex room-select-container">
             <h3>{props.room_type}</h3>
             <h3>
-              {ratePerNight.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {props.ratePerNight.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </h3>
           </div>
           <div className="room-rate">
@@ -101,26 +96,26 @@ const RoomSelected = (props) => {
           <div className="flex taxes-fees">
             <h3>Taxes & Fees</h3>
 
-            <h3>{totalTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h3>
+            <h3>{props.totalTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h3>
           </div>
           <Collapse ghost>
             <Panel header="More Details" key="1">
               <div className="flex service-charge">
                 <p>Service Charge (10%)</p>
                 <p>
-                  {serviceCharge
+                  {props.serviceCharge
                     .toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </p>
               </div>
               <div className="flex VAT-amount">
                 <p>VAT (12%)</p>
-                <p>{vat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
+                <p>{props.vat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
               </div>
               <div className="flex local-tax">
                 <p>Local Tax(1.50%)</p>
                 <p>
-                  {localTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {props.localTax.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </p>
               </div>
             </Panel>
@@ -130,7 +125,7 @@ const RoomSelected = (props) => {
       <Divider />
       <div className="flex booking-total-amount">
         <h1>Total Amount</h1>
-        <h1>{totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h1>
+        <h1>{props.totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h1>
       </div>
     </div>
   );

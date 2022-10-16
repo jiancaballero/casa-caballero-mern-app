@@ -32,6 +32,13 @@ const GuestDetails = () => {
   const nights = location.state.nights;
   const checkInDate = moment(checkInStr, "YYYY-MM-DD");
   const checkOutDate = moment(checkOutStr, "YYYY-MM-DD");
+  const vat = rate_amount * nights * 0.12;
+  const serviceCharge = rate_amount * nights * 0.1;
+  const localTax = rate_amount * nights * 0.015;
+  const totalTax = serviceCharge + vat + localTax;
+  const ratePerNight = rate_amount * nights;
+  const totalAmount = ratePerNight + totalTax;
+
   const [registration, setRegistration] = useState({
     firstName: "",
     lastName: "",
@@ -116,6 +123,7 @@ const GuestDetails = () => {
       room_type: room_type,
       rate_type: rate_type,
       rate_amount:rate_amount,
+      total:totalAmount,
       registration,
     };
     
@@ -225,7 +233,12 @@ const GuestDetails = () => {
               room_type={room_type}
               rate_type={rate_type}
               rate={rate_amount}
-              
+              vat={vat}
+              serviceCharge={serviceCharge}
+              localTax={localTax}
+              totalTax={totalTax}
+              totalAmount={totalAmount}
+              ratePerNight={ratePerNight}
             />
           </div>
         </div>

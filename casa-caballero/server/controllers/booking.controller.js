@@ -8,20 +8,20 @@ const Room = require("../model/room.model");
 
 // IMPORT NODEMAILER
 const nodemailer = require("nodemailer");
-
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
 const addBooking = (req, res) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD,
-    },
-  });
   const mailOptions = {
     from: process.env.EMAIL,
     to: req.body.guest_details.email,
     subject: `BOOKING CODE: ${req.body.bk_code}`,
-    text: `Thank you for booking at CASA CABALLERO website. Here is your booking code:${req.body.bk_code}. You may manage your bookings at CASA CABALLERO official website under the manage booking page`,
+    text: `Thank you for booking at CASA CABALLERO website. Here is your booking code:${req.body.bk_code}. 
+    You may manage your bookings at CASA CABALLERO official website under the manage booking page`,
   };
   const newBooking = new Booking({
     room: req.body.room_id,
@@ -35,6 +35,12 @@ const addBooking = (req, res) => {
     number_of_rooms: req.body.number_of_rooms,
     isGuest: req.body.isGuest,
     bk_code: req.body.bk_code,
+    nights: req.body.nights,
+    room_rate: {
+      type: req.body.rate_type,
+      amount: req.body.rate_amount,
+    },
+    price: req.body.total,
   });
 
   try {
@@ -93,8 +99,9 @@ const addBooking = (req, res) => {
 const getBooking = (req, res) => {
   try {
     Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
-      .populate("room")
+      .populate(["room"])
       .then((data) => {
+        console.log(data);
         res.status(200).send(data);
       });
   } catch (error) {
@@ -102,13 +109,29 @@ const getBooking = (req, res) => {
   }
 };
 const cancelBooking = (req, res) => {
-  console.log(req.body);
+  const mailOptions = {
+    from: process.env.EMAIL,
+    to: req.body.email,
+    subject: `BOOKING CODE:${req.body.bk_code} HAS BEEN CANCELLED`,
+    text: `Your booking (${req.body.bk_code}) has been successfully cancelled`,
+  };
   try {
     Booking.updateOne({ bk_code: req.body.bk_code }, [
       { $set: { status: "cancelled" } },
     ]).then((data) => {
       if (data.modifiedCount === 1) {
-        res.status(200).send(data);
+        transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("EMAIL SENT");
+            res.status(200).send({
+              message: "Your booking has been cancelled.",
+              data: data,
+            });
+          }
+        });
+      
       }
     });
   } catch (error) {
