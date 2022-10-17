@@ -4,7 +4,7 @@ import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import moment from "moment";
 import BookingSteps from "../../components/BookingSteps";
 import axios from "axios";
-import { Spin } from "antd";
+import { Spin, Card, Button, Steps } from "antd";
 import ErrorMessage from "../../components/ErrorMessage";
 
 const Payment = () => {
@@ -57,7 +57,7 @@ const Payment = () => {
   const [loading, setLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  
+  const { Step } = Steps;
   // const [bkCode, setBkCode] = useState("");
   const getPayment = () => {
     const bkCode = textNumCode(3, 4);
@@ -100,23 +100,35 @@ const Payment = () => {
   };
   return (
     <Spin tip="Processing your request" spinning={loading}>
-      
-
       <div className="PaymentSection">
-     
         <div className="container">
-          <BookingSteps />
+          <Steps current={2}>
+            <Step title="Select Your Room" />
+            <Step title="Enter Your Personal Details" />
+            <Step title="Review And Pay" />
+          </Steps>
           {hasError && <ErrorMessage message={errorMsg} />}
           <div className="flex payment-container">
             <div className="payment-left">
-              <ul>
-                <li>{guest_details.firstName}</li>
-                <li>{room_id}</li>
-                <li>{guest_details.lastName}</li>
-                <li>{guest_details.phone}</li>
-                <li>{guest_details.email}</li>
-              </ul>
-              <button onClick={getPayment}>Continue</button>
+              <Card
+                title="Guest Details"
+                // extra={<a href="#">More</a>}
+                style={{
+                  width: 600,
+                }}
+              >
+                <p>
+                  Name:{guest_details.firstName}
+                  {guest_details.lastName}
+                </p>
+                <p>Email: {guest_details.email}</p>
+                <p>Phone:{guest_details.phone}</p>
+              </Card>
+              <div></div>
+              <div></div>
+              <Button type="primary" onClick={getPayment} size="large">
+                Continue
+              </Button>
             </div>
 
             <div className="payment-right">

@@ -4,7 +4,7 @@ import BookingSummary from "../../components/BookingSummary";
 import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import { Button, Form, Input, Select,Alert} from "antd";
+import { Button, Form, Input, Select, Alert,Steps } from "antd";
 const { Option } = Select;
 const GuestDetails = () => {
   // const search = useLocation().search;
@@ -36,6 +36,7 @@ const GuestDetails = () => {
     phone: "",
     email: "",
   });
+  const { Step } = Steps;
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -92,11 +93,9 @@ const GuestDetails = () => {
         setRegistration({ ...registration, lastName: e.target.value });
         break;
       case "register_phone":
-       
         setRegistration({ ...registration, phone: e.target.value });
         break;
       case "register_email":
-        
         setRegistration({ ...registration, email: e.target.value });
         break;
 
@@ -106,8 +105,8 @@ const GuestDetails = () => {
   };
 
   useEffect(() => {
-    console.log(registration)
-    
+    console.log(registration);
+
     if (
       registration.firstName !== "" &&
       registration.lastName !== "" &&
@@ -115,8 +114,7 @@ const GuestDetails = () => {
       registration.email !== ""
     ) {
       setDisable(false);
-    }
-    else{
+    } else {
       setDisable(true);
     }
   }, [registration]);
@@ -147,10 +145,12 @@ const GuestDetails = () => {
   };
   return (
     <div className="guest_details_section">
-
       <div className="container">
-        
-        <BookingSteps />
+        <Steps current={1}>
+          <Step title="Select Your Room" />
+          <Step title="Enter Your Personal Details" />
+          <Step title="Review And Pay" />
+        </Steps>
         <br></br>
         <Alert message="Fill out all required fields" type="info" showIcon />
 
@@ -193,7 +193,6 @@ const GuestDetails = () => {
               </Form.Item>
               <Form.Item
                 name="email"
-                
                 label="E-mail"
                 onChange={getInputs}
                 rules={[
@@ -214,7 +213,6 @@ const GuestDetails = () => {
                 name="phone"
                 label="Phone"
                 onChange={getInputs}
-                
                 rules={[
                   {
                     required: true,
@@ -222,9 +220,7 @@ const GuestDetails = () => {
                   },
                 ]}
               >
-                <Input
-                 
-                />
+                <Input />
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
                 <Button
