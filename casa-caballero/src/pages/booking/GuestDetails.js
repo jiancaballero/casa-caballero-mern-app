@@ -1,31 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BookingSteps from "../../components/BookingSteps";
 import BookingSummary from "../../components/BookingSummary";
 import { useLocation, useNavigate, createSearchParams } from "react-router-dom";
 import moment from "moment";
 import { useSelector } from "react-redux";
-import {
-
-  Button,
- 
- 
-  Form,
-  Input,
-  
-  Select,
-} from "antd";
+import { Button, Form, Input, Select,Alert} from "antd";
 const { Option } = Select;
 const GuestDetails = () => {
   // const search = useLocation().search;
   const location = useLocation();
-  
   const navigate = useNavigate();
+
   const room_id = location.state.room_id;
   const room_type = location.state.room_type;
   const rate_type = location.state.rate_type;
   const rate_amount = location.state.rate_amount;
-  const checkInStr = location.state.checkIn
-  const checkOutStr = location.state.checkOut
+  const checkInStr = location.state.checkIn;
+  const checkOutStr = location.state.checkOut;
   const adult = location.state.adult;
   const child = location.state.childe;
   const room = location.state.room;
@@ -38,7 +29,7 @@ const GuestDetails = () => {
   const totalTax = serviceCharge + vat + localTax;
   const ratePerNight = rate_amount * nights;
   const totalAmount = ratePerNight + totalTax;
-
+  const [disable, setDisable] = useState(true);
   const [registration, setRegistration] = useState({
     firstName: "",
     lastName: "",
@@ -101,14 +92,34 @@ const GuestDetails = () => {
         setRegistration({ ...registration, lastName: e.target.value });
         break;
       case "register_phone":
+       
         setRegistration({ ...registration, phone: e.target.value });
         break;
       case "register_email":
+        
         setRegistration({ ...registration, email: e.target.value });
         break;
+
+      default:
+        setRegistration({ ...registration });
     }
   };
-  console.log(registration);
+
+  useEffect(() => {
+    console.log(registration)
+    
+    if (
+      registration.firstName !== "" &&
+      registration.lastName !== "" &&
+      registration.phone !== "" &&
+      registration.email !== ""
+    ) {
+      setDisable(false);
+    }
+    else{
+      setDisable(true);
+    }
+  }, [registration]);
 
   const saveGuestDetails = () => {
     const newParams = {
@@ -119,14 +130,14 @@ const GuestDetails = () => {
       room: room,
       nights: nights,
       step: 2,
-      room_id:room_id,
+      room_id: room_id,
       room_type: room_type,
       rate_type: rate_type,
-      rate_amount:rate_amount,
-      total:totalAmount,
+      rate_amount: rate_amount,
+      total: totalAmount,
       registration,
     };
-    
+
     navigate(
       {
         pathname: `/booking/payment/`,
@@ -136,8 +147,13 @@ const GuestDetails = () => {
   };
   return (
     <div className="guest_details_section">
+
       <div className="container">
+        
         <BookingSteps />
+        <br></br>
+        <Alert message="Fill out all required fields" type="info" showIcon />
+
         <div className="flex guest_details_container">
           <div className="guest_left">
             <Form
@@ -177,6 +193,7 @@ const GuestDetails = () => {
               </Form.Item>
               <Form.Item
                 name="email"
+                
                 label="E-mail"
                 onChange={getInputs}
                 rules={[
@@ -197,6 +214,7 @@ const GuestDetails = () => {
                 name="phone"
                 label="Phone"
                 onChange={getInputs}
+                
                 rules={[
                   {
                     required: true,
@@ -205,14 +223,12 @@ const GuestDetails = () => {
                 ]}
               >
                 <Input
-                  addonBefore={prefixSelector}
-                  style={{
-                    width: "100%",
-                  }}
+                 
                 />
               </Form.Item>
               <Form.Item {...tailFormItemLayout}>
                 <Button
+                  disabled={disable}
                   type="primary"
                   htmlType="submit"
                   onClick={saveGuestDetails}

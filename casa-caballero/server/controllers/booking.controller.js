@@ -20,8 +20,10 @@ const addBooking = (req, res) => {
     from: process.env.EMAIL,
     to: req.body.guest_details.email,
     subject: `BOOKING CODE: ${req.body.bk_code}`,
-    text: `Thank you for booking at CASA CABALLERO website. Here is your booking code:${req.body.bk_code}. 
-    You may manage your bookings at CASA CABALLERO official website under the manage booking page`,
+    text: `
+    Thank you for booking at CASA CABALLERO website. Here is your booking code:${req.body.bk_code}. 
+    You may manage your bookings at CASA CABALLERO official website under the manage booking page
+    `,
   };
   const newBooking = new Booking({
     room: req.body.room_id,
@@ -87,7 +89,12 @@ const addBooking = (req, res) => {
             });
           });
         } else {
-          res.status(400).send({ message: "Sorry. this room has already been booked. Please select a different room" });
+          res
+            .status(400)
+            .send({
+              message:
+                "Sorry. this room has already been booked. Please select a different room",
+            });
         }
         // });
       });
@@ -101,11 +108,10 @@ const getBooking = (req, res) => {
     Booking.findOne({ bk_code: { $eq: req.params.bk_code } })
       .populate("room")
       .then((data) => {
-        if(data!==null){
-          res.status(200).send(data)
-        }
-        else{
-          res.status(400).send({message:"No booking found",data:data})
+        if (data !== null) {
+          res.status(200).send(data);
+        } else {
+          res.status(400).send({ message: "No booking found", data: data });
         }
       });
   } catch (error) {
@@ -130,7 +136,8 @@ const cancelBooking = (req, res) => {
           } else {
             console.log("EMAIL SENT");
             res.status(200).send({
-              message: "Your booking has been cancelled. We sent you a confirmation in your email.",
+              message:
+                "Your booking has been cancelled. We sent you a confirmation in your email.",
               data: data,
             });
           }
