@@ -6,8 +6,15 @@ import BookingSteps from "../../components/BookingSteps";
 import axios from "axios";
 import { Spin, Card, Button, Steps } from "antd";
 import ErrorMessage from "../../components/ErrorMessage";
+import { loadStripe } from "@stripe/stripe-js";
+
+
+
 
 const Payment = () => {
+
+  
+ 
   var textCode = "";
   var numCode = "";
   var result = "";
@@ -58,7 +65,10 @@ const Payment = () => {
   const [hasError, setHasError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const { Step } = Steps;
-  // const [bkCode, setBkCode] = useState("");
+  const booking = {
+    price: totalAmount,
+  };
+
   const getPayment = () => {
     const bkCode = textNumCode(3, 4);
     setLoading(true);
@@ -85,8 +95,9 @@ const Payment = () => {
           if (res.status === 201) {
             setLoading(false);
             navigate(
-              { pathname: "/payment/success" },
-              { email: res.data.email }
+              {pathname:'/payment/success'},
+              
+              // { email: res.data.email }
             );
           }
         })
@@ -98,6 +109,9 @@ const Payment = () => {
         });
     } catch (error) {}
   };
+
+ 
+
   return (
     <Spin tip="Processing your request" spinning={loading}>
       <div className="PaymentSection">

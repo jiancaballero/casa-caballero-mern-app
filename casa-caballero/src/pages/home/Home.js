@@ -1,6 +1,6 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
-import { Carousel, Button, Card, Space, Badge,Spin } from "antd";
+import {Typography, Carousel, Button, Card, Space, Badge, Spin } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -10,7 +10,6 @@ import {
   faStar,
   faCircleChevronRight,
   faGift,
-  
 } from "@fortawesome/free-solid-svg-icons";
 
 import hero1 from "../../assets/images/hero1.png";
@@ -43,6 +42,17 @@ const Home = () => {
     alignItems: "center",
     flexDirection: "column",
   };
+  const contentStyle3 = {
+    height: "80vh",
+    width: "100vw",
+    color: "#fff",
+    backgroundImage: `url('https://i.pinimg.com/564x/bc/d7/21/bcd7214edec2598cb1d2db8ce1a0a6bd.jpg')`,
+    backgroundSize: "fill",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  };
   const accomodationContentStyle = {
     background: "#364d79",
 
@@ -51,50 +61,49 @@ const Home = () => {
   const onChange = (currentSlide) => {
     return currentSlide;
   };
-  
+
   const [loading, setLoading] = useState(false);
-  const setLoader = (isLoading)=>{
+  const setLoader = (isLoading) => {
     setLoading(isLoading);
-  }
+  };
   return (
     <Spin tip="Searching for rooms" spinning={loading}>
       <Carousel autoplay effect="fade">
         <div className="carousel">
-          <h1 style={contentStyle1}>
-            A Modern Spanish Hotel
-            <Button type="primary" size="large">
-              Book Now
-            </Button>
-          </h1>
+          <div style={contentStyle1}>
+           
+            <div className="container dates-guest-container">
+              <CheckAvailability setLoader={setLoader} />
+            </div>
+          </div>
         </div>
         <div>
-          <h1 style={contentStyle2}>
-            Relax And Recharge
-            <Button type="primary" size="large">
-              Primary Button
-            </Button>
-          </h1>
+          <div style={contentStyle2}>
+           
+            <div className="container dates-guest-container">
+              
+              <CheckAvailability setLoader={setLoader} />
+            </div>
+          </div>
         </div>
         <div>
-          <h1 style={contentStyle1}>
-            World Class Facilities
-            <Button type="primary" size="large">
-              Primary Button
-            </Button>
-          </h1>
+          <div style={contentStyle3}>
+          
+            <div className="container dates-guest-container">
+              <CheckAvailability setLoader={setLoader} />
+            </div>
+          </div>
         </div>
         <div>
-          <h1 style={contentStyle2}>
-            Excellent Service
-            <Button type="primary" size="large"></Button>
-          </h1>
+          <div style={contentStyle2}>
+         
+            <div className="container dates-guest-container">
+              <CheckAvailability setLoader={setLoader} />
+            </div>
+          </div>
         </div>
       </Carousel>
-      <div className="DatesAndGuest">
-        <div className="container dates-guest-container">
-          <CheckAvailability setLoader={setLoader} />
-        </div>
-      </div>
+
       <div className="About">
         <div className="container flex about-container">
           <div className="about-left">
@@ -300,7 +309,7 @@ const Home = () => {
             <h1>Connect with us</h1>
             <h3>Social Media Accounts</h3>
             <div className="flex">
-            <FontAwesomeIcon icon="fa-brands fa-facebook-f" />
+              <FontAwesomeIcon icon="fa-brands fa-facebook-f" />
             </div>
           </div>
           <div className="contact-right"></div>

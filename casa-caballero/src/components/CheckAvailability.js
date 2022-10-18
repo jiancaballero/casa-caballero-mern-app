@@ -1,4 +1,7 @@
 import { DatePicker, Space, Button } from "antd";
+import {
+ CalendarFilled
+} from '@ant-design/icons';
 import moment from "moment";
 import React, { useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
@@ -83,8 +86,12 @@ const CheckAvailability = ({setLoader}) => {
     setCheckOutOpen(open);
   };
   return (
-    <>
+    <div className="flex date-flex">
+      <div className="check-in-cont">
+      <p>Check-in</p>
+     
       <DatePicker
+     
         defaultValue={checkInDate}
         defaultPickerValue={checkInDate}
         format={"ddd, MMM DD, YYYY"}
@@ -95,6 +102,10 @@ const CheckAvailability = ({setLoader}) => {
         showToday={false}
       />
 
+      </div>
+      <div className="check-out-cont">
+      <p>Check-out</p>
+      
       <DatePicker
         value={checkOutDate}
         format={"ddd, MMM DD, YYYY"}
@@ -105,11 +116,12 @@ const CheckAvailability = ({setLoader}) => {
         onOpenChange={handleCheckOutOpen}
         showToday={false}
       />
+      </div>
      
-      <Button type="primary" size="large" onClick={searchRooms}>
+      <Button type="primary" size="medium" onClick={searchRooms}>
         Check Availability
       </Button>
-    </>
+    </div>
   );
 };
 

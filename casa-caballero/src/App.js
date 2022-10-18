@@ -9,7 +9,7 @@ import GuestDetails from './pages/booking/GuestDetails';
 import Payment from './pages/booking/Payment';
 import SuccessPayment from './pages/payment/SuccesPayment';
 import ManageBooking from './pages/booking/ManageBooking';
-
+import "@stripe/stripe-js";
 function App() {
  
   return (

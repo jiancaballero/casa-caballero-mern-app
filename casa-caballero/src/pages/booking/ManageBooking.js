@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AutoComplete,
   Button,
@@ -10,7 +10,8 @@ import {
   Select,
   Alert,
   Spin,
-  Table
+  Table,
+  Tag,
 } from "antd";
 import axios from "axios";
 import moment from "moment";
@@ -26,42 +27,19 @@ const ManageBooking = () => {
   const [noBookingError, setNoBookingError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [disable, setDisable] = useState(true);
   const onFinish = (values) => {
     return values;
   };
-  const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 8,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 16,
-      },
-    },
-  };
-  const tailFormItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-        offset: 0,
-      },
-      sm: {
-        span: 16,
-        offset: 8,
-      },
-    },
-  };
   const getBkCode = (e) => {
-    setBkCode(e.target.value);
+    if (e.target.value !== "") {
+      setDisable(false);
+      setBkCode(e.target.value);
+    } else {
+      setDisable(true);
+    }
   };
+
   const getBooking = () => {
     setLoading(true);
     try {
@@ -109,22 +87,122 @@ const ManageBooking = () => {
     }
   };
 
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Check-in",
+      dataIndex: "checkIn",
+      key: "checkIn",
+    },
+    {
+      title: "Check-out",
+      dataIndex: "checkOut",
+      key: "checkOut",
+    },
+    {
+      title: "# of nights",
+      dataIndex: "nights",
+      key: "nights",
+    },
+    {
+      title: "Room Type",
+      dataIndex: "rmType",
+      key: "rmType",
+    },
+    {
+      title: "Room Name",
+      dataIndex: "rmName",
+      key: "rmName",
+    },
+    {
+      title: "Rate Type",
+      dataIndex: "rtType",
+      key: "rtType",
+    },
+    {
+      title: "Rate Amount",
+      dataIndex: "rtAmount",
+      key: "rtAmount",
+    },
+    {
+      title: "Total Amount",
+      dataIndex: "total",
+      key: "total",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_, { tags }) => (
+        <>
+          {tags.map((tag) => {
+            let color = bookingDetails?.status === "cancelled" ? "volcano" : "green";
+            
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_, cancel) =>
+        bookingDetails?.status !== "cancelled" && (
+          <Button onClick={cancelBooking}>Cancel Booking</Button>
+        ),
+    },
+  ];
+
+  const data = Object.keys(bookingDetails).length > 0 && [
+    {
+      key: "1",
+      name:
+        bookingDetails?.guest_details.firstName +
+        " " +
+        bookingDetails?.guest_details.lastName,
+      checkIn: new Date(bookingDetails?.check_in).toLocaleDateString(
+        undefined,
+        { year: "numeric", month: "long", day: "numeric" }
+      ),
+      checkOut: new Date(bookingDetails?.check_out).toLocaleDateString(
+        undefined,
+        { year: "numeric", month: "long", day: "numeric" }
+      ),
+      nights: bookingDetails?.nights,
+      rmType: bookingDetails?.room.room_type,
+      rmName: bookingDetails?.room.room_title,
+      rtType: bookingDetails?.room_rate.type,
+      rtAmount: bookingDetails?.room_rate.amount
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+      total:
+        bookingDetails?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+        " (tax included) ",
+      tags: [bookingDetails?.status],
+    },
+  ];
+
   return (
     <Spin tip="Processing your request" spinning={loading}>
-      <div className="guest_left">
-        {hasError && (
-          <ErrorMessage message={noBookingError}/>
-         
-        )}
-         {emailSent && (
-          <SuccessMessage message={successMessage}/>
-         
-        )}
-
-        <p>Please check your booking code in your email.</p>
-
+      <div className="container">
+        {hasError && <ErrorMessage message={noBookingError} />}
+        {emailSent && <SuccessMessage message={successMessage} />}
+        <Alert
+          message="Please check your booking code in your email."
+          type="info"
+        />
+        <br></br>
+        <br></br>
         <Form
-          {...formItemLayout}
           form={form}
           name="register"
           onFinish={onFinish}
@@ -142,64 +220,22 @@ const ManageBooking = () => {
               },
             ]}
           >
-            <Input />
+            <Input className="booking-input" />
           </Form.Item>
-
-          <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" onClick={getBooking}>
-              Continue
-            </Button>
-            {Object.keys(bookingDetails).length > 0 && (
-              <ul>
-                <li>
-                  Name:
-                  {bookingDetails?.guest_details.firstName +
-                    " " +
-                    bookingDetails?.guest_details.lastName}
-                </li>
-                <li>
-                  Check-in:
-                  {new Date(bookingDetails?.check_in).toLocaleDateString(
-                    undefined,
-                    { year: "numeric", month: "long", day: "numeric" }
-                  )}
-                </li>
-                <li>
-                  Check-out:
-                  {new Date(bookingDetails?.check_out).toLocaleDateString(
-                    undefined,
-                    { year: "numeric", month: "long", day: "numeric" }
-                  )}
-                </li>
-                <li>Number of nights:{bookingDetails?.nights}</li>
-                <li>Adult:{bookingDetails?.adult}</li>
-                <li>Room Type:{bookingDetails?.room.room_type}</li>
-                <li>Room Name:{bookingDetails?.room.room_title}</li>
-                <li>Status:{bookingDetails?.status}</li>
-                <li>Rate Type:{bookingDetails?.room_rate.type}</li>
-                <li>
-                  Rate Amount:
-                  {bookingDetails?.room_rate.amount
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </li>
-                <li>
-                  Total Price:
-                  {bookingDetails?.price
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  (tax included)
-                </li>
-
-                <li>
-                  {bookingDetails.status !== "cancelled" && (
-                    <Button onClick={cancelBooking}>Cancel Booking</Button>
-                  )}
-                </li>
-              </ul>
-            )}
-          </Form.Item>
+          <Button
+          type="primary"
+          htmlType="submit"
+          onClick={getBooking}
+          disabled={disable}
+          className="booking-code-btn"
+        >
+          Continue
+        </Button>
+        
+         
         </Form>
+       
+        <Table columns={columns} dataSource={data} />;
       </div>
     </Spin>
   );

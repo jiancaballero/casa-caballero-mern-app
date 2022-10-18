@@ -259,6 +259,11 @@ img {
 .guest_details_section {
   padding-top: 2em;
   background: #e0d6cd;
+  
+}
+.date-flex{
+  gap:20px;
+  align-items: flex-end;
 }
 .guest_details_container {
   padding: 4em;
@@ -339,4 +344,14 @@ img {
 }
 .rate-type p{
   margin:0;
+}
+
+.check-in-cont p , .check-out-cont p{
+  margin:0;
+}
+.booking-input{
+  width:200px;
+}
+.booking-code-btn{
+  margin-bottom: 2em;
 }
