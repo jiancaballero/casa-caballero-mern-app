@@ -74,7 +74,7 @@ const Payment = () => {
     setLoading(true);
     try {
       axios
-        .post("http://localhost:8080/api/bookings", {
+        .post("https://casa-caballero-be.herokuapp.com/api/bookings", {
           room_id: room_id,
           booking_start: checkInDate.format("LL"),
           booking_end: checkOutDate.format("LL"),
