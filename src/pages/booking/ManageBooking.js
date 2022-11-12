@@ -68,7 +68,7 @@ const ManageBooking = () => {
     setLoading(true);
     try {
       axios
-        .put("https://casa-caballero-be.herokuapp.com/api/bookings/cancel", {
+        .put("https://casa-caballero-mern-be.herokuapp.com/api/bookings/cancel", {
           bk_code: bkCode,
           email: bookingDetails.guest_details.email,
         })

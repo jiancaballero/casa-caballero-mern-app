@@ -36,7 +36,7 @@ const CheckAvailability = ({setLoader}) => {
     try {
       
       axios
-        .post("https://casacaballero-be.herokuapp.com/api/rooms", {
+        .post("https://casa-caballero-mern-be.herokuapp.com/api/rooms", {
           booking_start: checkInDate.format('LL'),
           booking_end: checkOutDate.format('LL'),
           adult:adult
