@@ -44,7 +44,7 @@ const ManageBooking = () => {
     setLoading(true);
     try {
       axios
-        .get(`https://casa-caballero-be.herokuapp.com/api/bookings/${bkCode}`)
+        .get(`https://casacaballero-be.herokuapp.com/api/bookings/${bkCode}`)
         .then((res) => {
           if (res.status === 200) {
             setLoading(false);

@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { withConfirm } from "antd/lib/modal/confirm";
 // useDispatch = action, payload
 // useSelector = access the state which is in the reducer file
 const CheckAvailability = ({setLoader}) => {
@@ -35,7 +36,7 @@ const CheckAvailability = ({setLoader}) => {
     try {
       
       axios
-        .post("https://casa-caballero-be.herokuapp.com/api/rooms", {
+        .post("https://casacaballero-be.herokuapp.com/api/rooms", {
           booking_start: checkInDate.format('LL'),
           booking_end: checkOutDate.format('LL'),
           adult:adult
