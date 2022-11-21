@@ -5,9 +5,9 @@ import { UpCircleFilled } from "@ant-design/icons";
 import { BackTop } from "antd";
 import moment from "moment";
 import { useSelector } from "react-redux";
-// import axios from "axios";
+
 import RoomList from "../../components/RoomList";
-import axios from "axios";
+
 import BookingSummary from "../../components/BookingSummary";
 import BookingSteps from "../../components/BookingSteps";
 // import RoomList from './pages/room/RoomList';
