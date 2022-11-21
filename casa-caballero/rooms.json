@@ -1,0 +1,282 @@
+[{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea27a"
+  },
+  "room_title": "Primera King",
+  "room_type": "Premium Room",
+  "bed": {
+    "bed_type": "King",
+    "quantity": "1"
+  },
+  "max_occupancy": 3,
+  "rate":[
+    {
+      "rate_type":"Standard Rate",
+      "rate_amount":8500,
+      "rate_description":"descriptioin of the rate"
+    },
+    {
+      "rate_type":"Breakfast Rate",
+      "rate_amount":9000,
+      "rate_description":"descriptioin of the rate"
+    }
+  ],
+  "amenities": [
+    "Mountain View",
+    "King Bed",
+    "Living area",
+    "Spacious foyer",
+    "Expansice bathroom with bath tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/61/78/47/61784738744a5daf8964563673a9dada.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": "101"
+},{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea276"
+  },
+  "room_title": "El Cuarto King",
+  "room_type": "Deluxe",
+  "bed": {
+    "bed_type": "King",
+    "quantity": "1"
+  },
+  "max_occupancy": 3,
+  "rate":[
+    {
+      "rate_type":"Standard Rate",
+      "rate_amount":7500,
+      "rate_description":"descriptioin of the rate"
+    },
+    {
+      "rate_type":"Breakfast Rate",
+      "rate_amount":8000,
+      "rate_description":"descriptioin of the rate"
+    }
+  ],
+  "amenities": [
+    "King-size bed",
+    "Living area",
+    "Bathroom with bath tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/a2/c0/62/a2c062a575bb7e866962eda5a93fdd5e.jpg",
+    "https://i.pinimg.com/564x/72/1e/8b/721e8bca767b36264daaa2228a9580b3.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": 201
+},{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea277"
+  },
+  "room_title": "El Cuarto Twin",
+  "room_type": "Deluxe Twin",
+  "bed": {
+    "bed_type": "Twin Bed",
+    "quantity": "2"
+  },
+  "max_occupancy": 3,
+  "rate":[
+    {
+      "rate_type":"Standard Rate",
+      "rate_amount":7500,
+      "rate_description":"descriptioin of the rate"
+    },
+    {
+      "rate_type":"Breakfast Rate",
+      "rate_amount":8000,
+      "rate_description":"descriptioin of the rate"
+    }
+  ],
+  "amenities": [
+    "Twin-size beds",
+    "Living area",
+    "Bathroom with bath tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/72/4e/e2/724ee293e2b62f22a23e35a31035a051.jpg",
+    "https://i.pinimg.com/564x/72/1e/8b/721e8bca767b36264daaa2228a9580b3.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": 301
+},{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea27c"
+  },
+  "room_title": "Casa Suite Mountain View King",
+  "room_type": "Suite Mountain View King",
+  "bed": {
+    "bed_type": "King",
+    "quantity": "1"
+  },
+  "max_occupancy": 3,
+  "rate":[
+    {
+      "rate_type":"Standard Rate",
+      "rate_amount":12000,
+      "rate_description":"descriptioin of the rate"
+    },
+    {
+      "rate_type":"Breakfast Rate",
+      "rate_amount":12500,
+      "rate_description":"descriptioin of the rate"
+    }
+  ],
+  "amenities": [
+    "Mountain View",
+    "King Bed",
+    "Gracious living room with writing desk",
+    "Dining table for four",
+    "Compact pantry including sink, dishwasher and dining essentials",
+    "Expansive bathroom with soaking tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar and mini wine cellar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/0c/8f/b4/0c8fb4dc97a8421dd59d5c1c8e586fa4.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": 401
+},{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea279"
+  },
+  "room_title": "Deluxe Mountain View Twin",
+  "room_type": "Deluxe Mountain View Twin",
+  "bed": {
+    "bed_type": "Twin",
+    "quantity": "2"
+  },
+  "max_occupancy": 3,
+  "rate":[
+    {
+      "rate_type":"Standard Rate",
+      "rate_amount":10000,
+      "rate_description":"descriptioin of the rate"
+    },
+    {
+      "rate_type":"Breakfast Rate",
+      "rate_amount":10500,
+      "rate_description":"descriptioin of the rate"
+    }
+  ],
+  "amenities": [
+    "Mountain View",
+    "Twin Beds",
+    "Living area",
+    "Bathroom with bath tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/01/5f/8a/015f8ab91421b58a5932af67d5739621.jpg",
+    "https://i.pinimg.com/564x/72/1e/8b/721e8bca767b36264daaa2228a9580b3.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": 501
+},{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea27b"
+  },
+  "room_title": "Suite King",
+  "room_type": "Suite",
+  "bed": {
+    "bed_type": "King",
+    "quantity": "1"
+  },
+  "max_occupancy": 3,
+  "rate":[
+    {
+      "rate_type":"Standard Rate",
+      "rate_amount":11500,
+      "rate_description":"descriptioin of the rate"
+    },
+    {
+      "rate_type":"Breakfast Rate",
+      "rate_amount":12000,
+      "rate_description":"descriptioin of the rate"
+    }
+  ],
+  "amenities": [
+    "Mountain View",
+    "King Bed",
+    "Gracious living room with writing desk",
+    "Dining table for four",
+    "Compact pantry including sink, dishwasher and dining essentials",
+    "Expansive bathroom with soaking tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar and mini wine cellar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/24/2e/ab/242eab69d2f5648d69bdbd814e5e989e.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": 601
+},{
+  "_id": {
+    "$oid": "633c48e68d6ddd3f0b6ea278"
+  },
+  "room_title": "Deluxe Mountain View King",
+  "rate": [
+    {
+      "rate_type": "Standard Rate",
+      "rate_amount": 9800,
+      "rate_description": "Rates are on a room only basis.",
+      "id": {
+        "$oid": "633d60be38e71be1294a66dd"
+      }
+    },
+    
+    {
+      "rate_type": "Breakfast Rate",
+      "rate_amount": 10300,
+      "rate_description": "Daily breakfast",
+      "id": {
+        "$oid": "633d60c338e71be1294a66de"
+      }
+    },
+    {
+      "rate_type": "Member Rate",
+      "rate_amount": 8820,
+      "rate_description": "CASA CABALLERO membership discount rate",
+      "id": {
+        "$oid": "633d60c838e71be1294a66df"
+      }
+    },
+    {
+      "rate_type": "Member Breakfast Rate",
+      "rate_amount": 9270,
+      "rate_description": "CASA CABALLERO membership discount rate",
+      "id": {
+        "$oid": "633d60ce38e71be1294a66e0"
+      }
+    }
+  ],
+  "bed": {
+    "bed_type": "King",
+    "quantity": "1"
+  },
+  "max_occupancy": 3,
+  "amenities": [
+    "Mountain View",
+    "King Bed",
+    "Living area",
+    "Bathroom with bath tub",
+    "WiFi, TV with video camcorder connection, sound system, safe",
+    "Personal bar"
+  ],
+  "room_images": [
+    "https://i.pinimg.com/564x/1d/7c/28/1d7c28c5cc475be67253184da2761946.jpg",
+    "https://i.pinimg.com/564x/72/1e/8b/721e8bca767b36264daaa2228a9580b3.jpg"
+  ],
+  "current_bookings": [],
+  "room_number": 701
+}]
